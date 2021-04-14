@@ -9,7 +9,8 @@ verify_ssl = true
 numpy = "*"
 matplotlib = "*"
 jupyter = "*"
-quantum-systems = {editable = true,git = "ssh://git@github.com/Schoyen/quantum-systems.git"}
+scipy = "*"
+quantum-systems = {editable = true,git = "https://github.com/Schoyen/quantum-systems.git"}
 
 [requires]
 python_version = "3.8"
