@@ -3,5 +3,6 @@
 #
 - file: intro
   sections:
+    - file: task-1-single-particle-basis
     - file: markdown
     - file: notebooks
