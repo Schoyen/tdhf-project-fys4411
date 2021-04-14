@@ -3,3 +3,5 @@ matplotlib
 numpy
 scipy
 git+https://github.com/Schoyen/quantum-systems.git
+black
+nb-black
