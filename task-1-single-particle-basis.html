@@ -56,7 +56,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="Task 2: General Hartree-Fock solver" href="task-2-ghf-solver.html" />
     <link rel="prev" title="Time-dependent Hartree-Fock theory" href="intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -98,6 +98,11 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Task 1: Single-particle basis
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="task-2-ghf-solver.html">
+   Task 2: General Hartree-Fock solver
   </a>
  </li>
  <li class="toctree-l1">
@@ -229,6 +234,11 @@
      Matrix elements
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plotting-the-basis-elements">
+     Plotting the basis elements
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -252,24 +262,24 @@
 We will use a single-particle basis of one-dimensional harmonic oscillator eigenfunctions.
 To construct this basis we diagonalize a one-dimensional harmonic oscillator Hamiltonian without the interaction term.
 The Hamiltonian is then given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4c79fe01-c72b-4d02-b07b-32203b75ee6a">
-<span class="eqno">(1)<a class="headerlink" href="#equation-4c79fe01-c72b-4d02-b07b-32203b75ee6a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d776d0d6-f11d-478b-8946-6ad2ae870882">
+<span class="eqno">(1)<a class="headerlink" href="#equation-d776d0d6-f11d-478b-8946-6ad2ae870882" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{h}
-    = -\frac{1}{2} \frac{\text{d}}{\text{d}x}
+    = -\frac{1}{2} \frac{\text{d}^2}{\text{d}x^2}
     + \frac{1}{2} \omega^2 \hat{x}^2,
 \end{align}\]</div>
 <p>where we use natural units with <span class="math notranslate nohighlight">\(\hbar = m = 1\)</span>.
 We proceed by solving the time-independent Schrödinger equation, viz.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-08ea26b4-2c35-4d2b-b8bb-42a77ebfa34a">
-<span class="eqno">(2)<a class="headerlink" href="#equation-08ea26b4-2c35-4d2b-b8bb-42a77ebfa34a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e05d8be4-baef-4bf6-a0c4-5f9b990a8b44">
+<span class="eqno">(2)<a class="headerlink" href="#equation-e05d8be4-baef-4bf6-a0c4-5f9b990a8b44" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{h}|\chi_{\alpha}\rangle
     = \epsilon_{\alpha}|\chi_{\alpha}\rangle,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_{\alpha}\)</span> are the eigenenergies and <span class="math notranslate nohighlight">\(|\chi_{\alpha}\rangle\)</span> the corresponding eigenstates.
 We already know the answers to this equation from <span id="id3">[<a class="reference internal" href="intro.html#id4"><span>Gri10</span></a>]</span>.
 The eigenenergies are <span class="math notranslate nohighlight">\(\epsilon_{\alpha} = \omega(\alpha + 1/2)\)</span> for the energies and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59ff1c79-c233-4146-8543-2fdc7fb8714a">
-<span class="eqno">(3)<a class="headerlink" href="#equation-59ff1c79-c233-4146-8543-2fdc7fb8714a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-44c05313-40e3-4fdb-948c-d2626886b570">
+<span class="eqno">(3)<a class="headerlink" href="#equation-44c05313-40e3-4fdb-948c-d2626886b570" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \chi_{\alpha}(x) = \left(\frac{\omega}{\pi}\right)^{1 / 4}
     \frac{1}{\sqrt{2^{\alpha} \alpha!}} H_{\alpha}(\sqrt{\omega} x),
 \end{align}\]</div>
@@ -288,8 +298,8 @@ This library uses finite-differences to solve the one-body Hamiltonian as this a
 <div class="section" id="matrix-elements">
 <h3>Matrix elements<a class="headerlink" href="#matrix-elements" title="Permalink to this headline">¶</a></h3>
 <p>The matrix elements we will be needing for this project are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9610a71f-6508-421d-b17d-1ee2bcbe66f0">
-<span class="eqno">(4)<a class="headerlink" href="#equation-9610a71f-6508-421d-b17d-1ee2bcbe66f0" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+<div class="amsmath math notranslate nohighlight" id="equation-fa3805fa-8a83-45a0-90a1-b5fb39f698a2">
+<span class="eqno">(4)<a class="headerlink" href="#equation-fa3805fa-8a83-45a0-90a1-b5fb39f698a2" title="Permalink to this equation">¶</a></span>\[\begin{gather}
     h_{\alpha \beta} = \langle \chi_{\alpha} | \hat{h} | \chi_{\beta} \rangle
     = \epsilon_{\beta} \delta_{\alpha \beta}, \\
     u^{\alpha \beta}_{\gamma \delta}
@@ -465,6 +475,48 @@ Below we demonstrate how these states can be found from the library.</p>
 <p>Note that all matrix elements and basis functions are inherently complex with the imaginary part being zero.
 The ground-state solutions will be real, but when we include time-evolution everything will become complex and to avoid problems with data types when using NumPy we start of with complex matrix elements.</p>
 </div>
+<div class="section" id="plotting-the-basis-elements">
+<h3>Plotting the basis elements<a class="headerlink" href="#plotting-the-basis-elements" title="Permalink to this headline">¶</a></h3>
+<p>Below we demonstrate how the single-particle functions can be plotted on the grid along with the harmonic oscillator potential.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">odqd</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span> <span class="n">potential</span><span class="p">(</span><span class="n">odqd</span><span class="o">.</span><span class="n">grid</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">odqd</span><span class="o">.</span><span class="n">grid</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">odqd</span><span class="o">.</span><span class="n">spf</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">odqd</span><span class="o">.</span><span class="n">h</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\chi_{&quot;</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;}$&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/task-1-single-particle-basis_12_0.png" src="_images/task-1-single-particle-basis_12_0.png" />
+<script type="application/javascript">
+            setTimeout(function() {
+                var nbb_cell_id = 6;
+                var nbb_unformatted_code = "fig = plt.figure(figsize=(16, 10))\n\nplt.plot(odqd.grid, potential(odqd.grid))\n\nfor i in range(l):\n    plt.plot(\n        odqd.grid,\n        np.abs(odqd.spf[i]) ** 2 + odqd.h[i, i].real,\n        label=r\"$\\chi_{\" + f\"{i}\" + r\"}$\",\n    )\n\nplt.grid()\nplt.legend()\nplt.show()";
+                var nbb_formatted_code = "fig = plt.figure(figsize=(16, 10))\n\nplt.plot(odqd.grid, potential(odqd.grid))\n\nfor i in range(l):\n    plt.plot(\n        odqd.grid,\n        np.abs(odqd.spf[i]) ** 2 + odqd.h[i, i].real,\n        label=r\"$\\chi_{\" + f\"{i}\" + r\"}$\",\n    )\n\nplt.grid()\nplt.legend()\nplt.show()";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i < nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {
+                             nbb_cells[i].set_text(nbb_formatted_code);
+                        }
+                        break;
+                    }
+                }
+            }, 500);
+            </script></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -494,7 +546,7 @@ The ground-state solutions will be real, but when we include time-evolution ever
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Time-dependent Hartree-Fock theory</a>
-    <a class='right-next' id="next-link" href="markdown.html" title="next page">Markdown Files</a>
+    <a class='right-next' id="next-link" href="task-2-ghf-solver.html" title="next page">Task 2: General Hartree-Fock solver</a>
 
         </div>
         

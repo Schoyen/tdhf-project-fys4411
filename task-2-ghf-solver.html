@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; FYS4411 - Project 2 TDHF</title>
+    <title>Task 2: General Hartree-Fock solver &#8212; FYS4411 - Project 2 TDHF</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -52,8 +52,12 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="index" title="Index" href="#" />
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="prev" title="Task 1: Single-particle basis" href="task-1-single-particle-basis.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -90,14 +94,14 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="task-1-single-particle-basis.html">
    Task 1: Single-particle basis
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="task-2-ghf-solver.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Task 2: General Hartree-Fock solver
   </a>
  </li>
@@ -143,6 +147,23 @@
             </button>
             
             
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/task-2-ghf-solver.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
             <!-- Source interaction buttons -->
 
 <div class="dropdown-buttons-trigger">
@@ -154,7 +175,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Schoyen/tdhf-project-fys4411/issues/new?title=Issue%20on%20page%20%2Fgenindex.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Schoyen/tdhf-project-fys4411/issues/new?title=Issue%20on%20page%20%2Ftask-2-ghf-solver.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -170,11 +191,43 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Schoyen/tdhf-project-fys4411/master?urlpath=tree/docs/task-2-ghf-solver.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#types-of-orbital-systems">
+   Types of orbital systems
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
         </div>
     </div>
 </div>
@@ -183,19 +236,56 @@
         
               <div>
                 
-
-<h1 id="index">Index</h1>
-
-<div class="genindex-jumpbox">
- 
+  <div class="section" id="task-2-general-hartree-fock-solver">
+<h1>Task 2: General Hartree-Fock solver<a class="headerlink" href="#task-2-general-hartree-fock-solver" title="Permalink to this headline">¶</a></h1>
+<p>Having set up an initial single-particle basis set <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span> we now set out to find the ground state of the two-body problem.
+The full Hamiltonian used by <span id="id1">[<a class="reference internal" href="intro.html#id3"><span>ZKBS04</span></a>]</span> is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-72c03c70-1b01-44d9-879d-6dfada2b0a4e">
+<span class="eqno">(5)<a class="headerlink" href="#equation-72c03c70-1b01-44d9-879d-6dfada2b0a4e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \hat{H}
+    = \hat{h} + \hat{u}
+    = \sum_{i = 1}^{n}\left(
+        -\frac{1}{2}\frac{\text{d}^2}{\text{d}x^2}
+        + \frac{1}{2}\omega^2 x^2
+    \right)
+    + \sum_{i = 1}^{n} \sum_{j = i + 1}^{n} \frac{\alpha}{\sqrt{(x_i - x_j)^2 + a^2}},
+\end{align}\]</div>
+<p>where the number of particles <span class="math notranslate nohighlight">\(n = 2\)</span>, <span class="math notranslate nohighlight">\(a = 0.25\)</span>, <span class="math notranslate nohighlight">\(\alpha = 1\)</span> (not to be confused with the index <span class="math notranslate nohighlight">\(\alpha\)</span> in the basis of harmonic oscillator eigenstates), and <span class="math notranslate nohighlight">\(\omega = 0.25\)</span>.</p>
+<div class="section" id="types-of-orbital-systems">
+<h2>Types of orbital systems<a class="headerlink" href="#types-of-orbital-systems" title="Permalink to this headline">¶</a></h2>
+<p>In quantum chemistry it is common to call the initial single-particle functions for <em>atomic orbitals</em>.
+We will also adhere to this convention, thus making the basis of harmonic oscillator single-particle functions the atomic orbitals of our system.
+Now, as the harmonic oscillator Hamiltonian is independent of spin we have restricted our view to the spatial part of the atomic orbitals when using quantum-systems to construct our basis elements.</p>
+</div>
 </div>
 
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
         
         <div class='prev-next-bottom'>
             
+    <a class='left-prev' id="prev-link" href="task-1-single-particle-basis.html" title="previous page">Task 1: Single-particle basis</a>
+    <a class='right-next' id="next-link" href="markdown.html" title="next page">Markdown Files</a>
 
         </div>
         
