@@ -4,5 +4,6 @@
 - file: intro
   sections:
     - file: task-1-single-particle-basis
+    - file: task-2-ghf-solver
     - file: markdown
     - file: notebooks
