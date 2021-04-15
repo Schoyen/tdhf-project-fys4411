@@ -224,6 +224,11 @@
    Types of orbital systems
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-spin-to-the-harmonic-oscillator-basis">
+   Adding spin to the harmonic oscillator basis
+  </a>
+ </li>
 </ul>
 
         </nav>
@@ -240,8 +245,8 @@
 <h1>Task 2: General Hartree-Fock solver<a class="headerlink" href="#task-2-general-hartree-fock-solver" title="Permalink to this headline">¶</a></h1>
 <p>Having set up an initial single-particle basis set <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span> we now set out to find the ground state of the two-body problem.
 The full Hamiltonian used by <span id="id1">[<a class="reference internal" href="intro.html#id3"><span>ZKBS04</span></a>]</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1aa6caba-8dc3-4a20-a81d-7b7f6a9ea457">
-<span class="eqno">(5)<a class="headerlink" href="#equation-1aa6caba-8dc3-4a20-a81d-7b7f6a9ea457" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9ab0e614-9d56-477e-bedc-9d1816b49db7">
+<span class="eqno">(5)<a class="headerlink" href="#equation-9ab0e614-9d56-477e-bedc-9d1816b49db7" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{H}
     = \hat{h} + \hat{u}
     = \sum_{i = 1}^{n}\left(
@@ -253,37 +258,37 @@ The full Hamiltonian used by <span id="id1">[<a class="reference internal" href=
 <p>where the number of particles <span class="math notranslate nohighlight">\(n = 2\)</span>, <span class="math notranslate nohighlight">\(a = 0.25\)</span>, <span class="math notranslate nohighlight">\(\alpha = 1\)</span> (not to be confused with the index <span class="math notranslate nohighlight">\(\alpha\)</span> in the basis of harmonic oscillator eigenstates), and <span class="math notranslate nohighlight">\(\omega = 0.25\)</span>.</p>
 <div class="section" id="types-of-orbital-systems">
 <h2>Types of orbital systems<a class="headerlink" href="#types-of-orbital-systems" title="Permalink to this headline">¶</a></h2>
-<p>In quantum chemistry it is common to call the initial single-particle functions for <em>atomic orbitals</em>.
+<p>In quantum chemistry it is common to call the initial single-particle functions for <em>atomic orbitals</em> (AO).
 We will also adhere to this convention, thus making the basis of harmonic oscillator single-particle functions the atomic orbitals of our system.
 Now, as the harmonic oscillator Hamiltonian is independent of spin we have restricted our view to the spatial part of the atomic orbitals when using quantum-systems to construct our basis elements.
 However, when moving to the full fermionic many-body picture (two = many) we have to include spin to get the full picture.
 We often talk about three kinds of orbitals depending on the restrictions put on spin.</p>
 <ol>
 <li><p>The general spin-orbital is on the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-89ce6c97-0430-40fb-a884-a2228dee304e">
-<span class="eqno">(6)<a class="headerlink" href="#equation-89ce6c97-0430-40fb-a884-a2228dee304e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-097bfc93-0a07-4a91-8868-47856203a660">
+<span class="eqno">(6)<a class="headerlink" href="#equation-097bfc93-0a07-4a91-8868-47856203a660" title="Permalink to this equation">¶</a></span>\[\begin{align}
         \phi(x, m_s)
         &amp;= c_1 \varphi_1(x) \alpha(m_s) + c_2 \varphi_2(x) \beta(m_s),
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\varphi_i(x)\)</span> are the spatial oribtals, and <span class="math notranslate nohighlight">\(\sigma \in \{\alpha, \beta\}\)</span> are spin basis functions with <span class="math notranslate nohighlight">\(m_s \in \{\uparrow, \downarrow\}\)</span> the spin quantum number.
 Typical choices for the spin basis functions are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3499f5f0-4adf-46b2-9089-650c98f07477">
-<span class="eqno">(7)<a class="headerlink" href="#equation-3499f5f0-4adf-46b2-9089-650c98f07477" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+<div class="amsmath math notranslate nohighlight" id="equation-9918cf5f-f526-4f6e-9c7c-ff4b1d9ae24a">
+<span class="eqno">(7)<a class="headerlink" href="#equation-9918cf5f-f526-4f6e-9c7c-ff4b1d9ae24a" title="Permalink to this equation">¶</a></span>\[\begin{gather}
         \alpha(\uparrow) = 1, \quad \beta(\uparrow) = 0, \\
         \alpha(\downarrow) = 0, \quad \beta(\downarrow) = 1.
     \end{gather}\]</div>
 </li>
 <li><p>The unrestricted spin-orbital is on the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01b201e9-9592-4374-b7b8-5c44cf7595c7">
-<span class="eqno">(8)<a class="headerlink" href="#equation-01b201e9-9592-4374-b7b8-5c44cf7595c7" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2c9af0db-1989-4112-9fba-6ccc8ab4b706">
+<span class="eqno">(8)<a class="headerlink" href="#equation-2c9af0db-1989-4112-9fba-6ccc8ab4b706" title="Permalink to this equation">¶</a></span>\[\begin{align}
         \phi(x, m_s)
         = \varphi_{\sigma}(x) \sigma(m_s),
     \end{align}\]</div>
 <p>where an unrestricted spin-orbital has a definite spin-direction (either <span class="math notranslate nohighlight">\(\alpha\)</span> or <span class="math notranslate nohighlight">\(\beta\)</span>), but allows for the spatial part to be different between spin-directions.</p>
 </li>
 <li><p>The restricted spin-orbital is on the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-80907969-0e57-4089-9236-b87e8b96463c">
-<span class="eqno">(9)<a class="headerlink" href="#equation-80907969-0e57-4089-9236-b87e8b96463c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-202c92e2-a7ca-415a-8749-98779aca77a6">
+<span class="eqno">(9)<a class="headerlink" href="#equation-202c92e2-a7ca-415a-8749-98779aca77a6" title="Permalink to this equation">¶</a></span>\[\begin{align}
         \phi(x, m_s)
         = \varphi(x) \sigma(m_s),
     \end{align}\]</div>
@@ -293,6 +298,35 @@ Typical choices for the spin basis functions are</p>
 <p>We will in this project create a general Hartree-Fock (GHF) solver which implies that we use general spin-orbitals.
 This will turn out to be easiest mathematically (when deriving the equations for GHF) and the most general formulation.
 However, the restricted and unrestricted formulations are more numerically efficient.</p>
+</div>
+<div class="section" id="adding-spin-to-the-harmonic-oscillator-basis">
+<h2>Adding spin to the harmonic oscillator basis<a class="headerlink" href="#adding-spin-to-the-harmonic-oscillator-basis" title="Permalink to this headline">¶</a></h2>
+<p>From <span class="xref myst">task-1</span> we have constructed a spatial basis of harmonic oscillator eigenstates <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span>, with spin-independent matrix elements <span class="math notranslate nohighlight">\(h_{\alpha \beta}\)</span>, <span class="math notranslate nohighlight">\(u^{\alpha \beta}_{\gamma \delta}\)</span>, etc.
+We now wish to include spin in the harmonic oscillator basis functions.
+The way we do this is by doubling each spatial basis function (and hence each axis in the matrix elements) essentially creating duplicates.</p>
+<p>We will denote this basis of general harmonic oscillator spin-orbitals by <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{2l}\)</span>.
+The question is then how we can go from <span class="math notranslate nohighlight">\(h_{\alpha \beta} \to h_{\mu \nu}\)</span> and similarly for the other matrix elements.
+We let the general harmonic oscillator spin-orbitals be given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f4c03079-d7f5-4d00-aa02-d86aa798a785">
+<span class="eqno">(10)<a class="headerlink" href="#equation-f4c03079-d7f5-4d00-aa02-d86aa798a785" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    |\psi_{\mu}\rangle
+    &amp;= |\chi_{\alpha}\rangle \otimes |\sigma\rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha = \mu // 2\)</span> (integer division), and <span class="math notranslate nohighlight">\(\sigma = \alpha\)</span> if <span class="math notranslate nohighlight">\(\mu\)</span> is even and <span class="math notranslate nohighlight">\(\sigma = \beta\)</span> if <span class="math notranslate nohighlight">\(\mu\)</span> is odd.
+The one-body Hamiltonian matrix elements are thus given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8367a764-9412-4f79-99d7-f1b3b7b6e2b7">
+<span class="eqno">(11)<a class="headerlink" href="#equation-8367a764-9412-4f79-99d7-f1b3b7b6e2b7" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    h_{\mu \nu}
+    &amp;= \langle \psi_{\mu} | \hat{h} \otimes I_{2 \times 2} | \psi_{\nu} \rangle
+    = \left(\langle \chi_{\alpha} | \otimes \langle \sigma | \right)
+    \hat{h} \otimes I_{2 \times 2} \left( | \chi_{\beta} \rangle \otimes | \tau \rangle \right)
+    \\
+    &amp;= \langle \chi_{\alpha} | \hat{h} | \chi_{\beta} \rangle
+    \langle \sigma | \tau \rangle
+    = h_{\alpha \beta} \delta_{\sigma \tau},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(I_{2 \times 2}\)</span> is a <span class="math notranslate nohighlight">\(2 \times 2\)</span> idenity matrix, and we’ve chosen an orthonormal basis of spin states.
+The full matrix <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> in the</p>
 </div>
 </div>
 
