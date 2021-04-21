@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Time-dependent Hartree-Fock theory &#8212; FYS4411 - Project 2 TDHF</title>
+    <title>Task 4: Time-dependent general Hartree-Fock solver &#8212; FYS4411 - Project 2 TDHF</title>
     
   <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -54,7 +54,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Task 1: Single-particle basis" href="task-1-single-particle-basis.html" />
+    <link rel="next" title="Task 5: Time-dependent expectation values" href="task-5-td-expectation-values.html" />
+    <link rel="prev" title="Task 3: Expectation values" href="task-3-expectation-values.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -85,13 +86,13 @@
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
    Time-dependent Hartree-Fock theory
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="task-1-single-particle-basis.html">
    Task 1: Single-particle basis
@@ -107,8 +108,8 @@
    Task 3: Expectation values
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="task-4-tdghf-solver.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Task 4: Time-dependent general Hartree-Fock solver
   </a>
  </li>
@@ -167,9 +168,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/task-4-tdghf-solver.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -187,7 +188,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Schoyen/tdhf-project-fys4411/issues/new?title=Issue%20on%20page%20%2Fintro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Schoyen/tdhf-project-fys4411/issues/new?title=Issue%20on%20page%20%2Ftask-4-tdghf-solver.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -203,26 +204,28 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Schoyen/tdhf-project-fys4411/master?urlpath=tree/docs/task-4-tdghf-solver.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#project-tasks">
-   Project tasks:
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
         </div>
     </div>
 </div>
@@ -231,40 +234,8 @@
         
               <div>
                 
-  <div class="section" id="time-dependent-hartree-fock-theory">
-<h1>Time-dependent Hartree-Fock theory<a class="headerlink" href="#time-dependent-hartree-fock-theory" title="Permalink to this headline">¶</a></h1>
-<p>This is a project on the time-dependent Hartree-Fock method applied to a system
-of two one-dimensional quantum dots for the course <a class="reference external" href="https://www.uio.no/studier/emner/matnat/fys/FYS4411/v21/">FYS4411
-(2021)</a> at the
-University of Oslo.
-We will base the project around the paper: <span id="id1">[<a class="reference internal" href="#id3"><span>ZKBS04</span></a>]</span>.
-Below follows a list of tasks that needs to be completed for the project.</p>
-<div class="section" id="project-tasks">
-<h2>Project tasks:<a class="headerlink" href="#project-tasks" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
-<li><p>Set up the single-particle basis set.</p></li>
-<li><p>Create a general Hartree-Fock (GHF) ground-state solver.</p></li>
-<li><p>Compute the GHF ground-state energy, particle density, and dipole moment.</p></li>
-<li><p>Create a time-dependent general Hartree-Fock (TDGHF) solver, and add a
-time-dependent monochromatic dipole laser-field interaction term to the
-Hamiltonian.</p></li>
-<li><p>Compute the time-dependent overlap and the time-dependent dipole moment. Plot
-the results.</p></li>
-<li><p>Optional: Run a simulation with a laser pulse, and plot the Fourier spectra
-of the overlap and the dipole moment after the pulse is turned off.</p></li>
-</ol>
-<p id="id2"><dl class="citation">
-<dt class="label" id="id4"><span class="brackets">Gri10</span></dt>
-<dd><p>David J Griffiths. <em>Introduction to quantum mechanics</em>. Prentice Hall, second edition, 2010.</p>
-</dd>
-<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">ZKBS04</a></span></dt>
-<dd><p>J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. <em>Journal of Physics B: Atomic, Molecular and Optical Physics</em>, 37:763, 2004. <a class="reference external" href="https://doi.org/10.1088/0953-4075/37/4/004">doi:10.1088/0953-4075/37/4/004</a>.</p>
-</dd>
-</dl>
-</p>
-<div class="toctree-wrapper compound">
-</div>
-</div>
+  <div class="section" id="task-4-time-dependent-general-hartree-fock-solver">
+<h1>Task 4: Time-dependent general Hartree-Fock solver<a class="headerlink" href="#task-4-time-dependent-general-hartree-fock-solver" title="Permalink to this headline">¶</a></h1>
 </div>
 
     <script type="text/x-thebe-config">
@@ -292,7 +263,8 @@ of the overlap and the dipole moment after the pulse is turned off.</p></li>
         
         <div class='prev-next-bottom'>
             
-    <a class='right-next' id="next-link" href="task-1-single-particle-basis.html" title="next page">Task 1: Single-particle basis</a>
+    <a class='left-prev' id="prev-link" href="task-3-expectation-values.html" title="previous page">Task 3: Expectation values</a>
+    <a class='right-next' id="next-link" href="task-5-td-expectation-values.html" title="next page">Task 5: Time-dependent expectation values</a>
 
         </div>
         
