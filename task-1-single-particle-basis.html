@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task 1: Single-particle basis &#8212; FYS4411 - Project 2 TDHF</title>
     
-  <link rel="stylesheet" href="_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
 
     
   <link rel="stylesheet"
@@ -19,14 +20,10 @@
 
     
       
-  <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
-  <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -34,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.d3f166471bb80abb5163.js">
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -44,7 +41,7 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -58,14 +55,14 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Task 2: General Hartree-Fock solver" href="task-2-ghf-solver.html" />
     <link rel="prev" title="Time-dependent Hartree-Fock theory" href="intro.html" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
-
-
-
+    
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
     
 
     <div class="container-xl">
@@ -74,27 +71,27 @@
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="index.html">
-  
-  <img src="_static/logo.png" class="logo" alt="logo">
-  
-  
-  <h1 class="site-logo" id="site-title">FYS4411 - Project 2 TDHF</h1>
-  
-</a>
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">FYS4411 - Project 2 TDHF</h1>
+      
+    </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form>
-<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <ul class="nav sidenav_l1">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
    Time-dependent Hartree-Fock theory
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Task 1: Single-particle basis
@@ -132,6 +129,7 @@
  </li>
 </ul>
 
+    </div>
 </nav> <!-- To handle the deprecated key -->
 
 <div class="navbar_extra_footer">
@@ -197,12 +195,12 @@
     </div>
 </div>
 
-
             <!-- Full screen (wrap in <a> to have style consistency -->
-            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-                    title="Fullscreen mode"><i
-                        class="fas fa-expand"></i></button></a>
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
 
@@ -228,12 +226,11 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i>
-            Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#one-body-harmonic-oscillator-hamiltonian">
    One-body harmonic oscillator Hamiltonian
@@ -256,10 +253,26 @@
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#types-of-orbital-systems">
+   Types of orbital systems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#adding-spin-to-the-harmonic-oscillator-basis">
+   Adding spin to the harmonic oscillator basis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#anti-symmetric-two-body-elements">
+     Anti-symmetric two-body elements
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
-        </nav>
-        
+            </nav>
         </div>
     </div>
 </div>
@@ -277,24 +290,24 @@
 We will use a single-particle basis of one-dimensional harmonic oscillator eigenfunctions.
 To construct this basis we diagonalize a one-dimensional harmonic oscillator Hamiltonian without the interaction term.
 The Hamiltonian is then given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-93b7ede2-6b52-4983-8cf2-d02fb9fc063f">
-<span class="eqno">(1)<a class="headerlink" href="#equation-93b7ede2-6b52-4983-8cf2-d02fb9fc063f" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-73d46222-bcb5-477b-9fbf-b3a2b38bee3d">
+<span class="eqno">(1)<a class="headerlink" href="#equation-73d46222-bcb5-477b-9fbf-b3a2b38bee3d" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{h}
     = -\frac{1}{2} \frac{\text{d}^2}{\text{d}x^2}
     + \frac{1}{2} \omega^2 \hat{x}^2,
 \end{align}\]</div>
 <p>where we use natural units with <span class="math notranslate nohighlight">\(\hbar = m = 1\)</span>.
 We proceed by solving the time-independent Schrödinger equation, viz.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5bc98f3d-2116-4c78-b55b-e54f0dd2aa68">
-<span class="eqno">(2)<a class="headerlink" href="#equation-5bc98f3d-2116-4c78-b55b-e54f0dd2aa68" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4b9738c-5fb9-4b50-9531-a6dc42299747">
+<span class="eqno">(2)<a class="headerlink" href="#equation-d4b9738c-5fb9-4b50-9531-a6dc42299747" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{h}|\chi_{\alpha}\rangle
     = \epsilon_{\alpha}|\chi_{\alpha}\rangle,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_{\alpha}\)</span> are the eigenenergies and <span class="math notranslate nohighlight">\(|\chi_{\alpha}\rangle\)</span> the corresponding eigenstates.
 We already know the answers to this equation from <span id="id3">[<a class="reference internal" href="intro.html#id4"><span>Gri10</span></a>]</span>.
 The eigenenergies are <span class="math notranslate nohighlight">\(\epsilon_{\alpha} = \omega(\alpha + 1/2)\)</span> for the energies and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eddcc610-6e7b-4037-b823-86768db69cc4">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eddcc610-6e7b-4037-b823-86768db69cc4" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4a3a5a2-b824-43de-a4ed-2fed04dc894d">
+<span class="eqno">(3)<a class="headerlink" href="#equation-d4a3a5a2-b824-43de-a4ed-2fed04dc894d" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \chi_{\alpha}(x) = \left(\frac{\omega}{\pi}\right)^{1 / 4}
     \frac{1}{\sqrt{2^{\alpha} \alpha!}} H_{\alpha}(\sqrt{\omega} x),
 \end{align}\]</div>
@@ -313,8 +326,8 @@ This library uses finite-differences to solve the one-body Hamiltonian as this a
 <div class="section" id="matrix-elements">
 <span id="task-1-mel"></span><h3>Matrix elements<a class="headerlink" href="#matrix-elements" title="Permalink to this headline">¶</a></h3>
 <p>The matrix elements we will be needing for this project are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2edb86ed-b288-44b5-9823-d1f8a3eb1cc1">
-<span class="eqno">(4)<a class="headerlink" href="#equation-2edb86ed-b288-44b5-9823-d1f8a3eb1cc1" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+<div class="amsmath math notranslate nohighlight" id="equation-0d599cfd-3d90-411e-8f64-591c5ad588b1">
+<span class="eqno">(4)<a class="headerlink" href="#equation-0d599cfd-3d90-411e-8f64-591c5ad588b1" title="Permalink to this equation">¶</a></span>\[\begin{gather}
     h_{\alpha \beta} = \langle \chi_{\alpha} | \hat{h} | \chi_{\beta} \rangle
     = \epsilon_{\beta} \delta_{\alpha \beta}, \\
     u^{\alpha \beta}_{\gamma \delta}
@@ -368,7 +381,7 @@ Below we demonstrate how these states can be found from the library.</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="kn">from</span> <span class="nn">quantum_systems</span> <span class="kn">import</span> <span class="n">ODQD</span>
+<span class="kn">from</span> <span class="nn">quantum_systems</span> <span class="kn">import</span> <span class="n">ODQD</span><span class="p">,</span> <span class="n">GeneralOrbitalSystem</span>
 </pre></div>
 </div>
 </div>
@@ -376,8 +389,8 @@ Below we demonstrate how these states can be found from the library.</p>
 <script type="application/javascript">
             setTimeout(function() {
                 var nbb_cell_id = 2;
-                var nbb_unformatted_code = "import numpy as np\nimport matplotlib.pyplot as plt\n\nfrom quantum_systems import ODQD";
-                var nbb_formatted_code = "import numpy as np\nimport matplotlib.pyplot as plt\n\nfrom quantum_systems import ODQD";
+                var nbb_unformatted_code = "import numpy as np\nimport matplotlib.pyplot as plt\n\nfrom quantum_systems import ODQD, GeneralOrbitalSystem";
+                var nbb_formatted_code = "import numpy as np\nimport matplotlib.pyplot as plt\n\nfrom quantum_systems import ODQD, GeneralOrbitalSystem";
                 var nbb_cells = Jupyter.notebook.get_cells();
                 for (var i = 0; i < nbb_cells.length; ++i) {
                     if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
@@ -533,6 +546,187 @@ The ground-state solutions will be real, but when we include time-evolution ever
 </div>
 </div>
 </div>
+<div class="section" id="types-of-orbital-systems">
+<h2>Types of orbital systems<a class="headerlink" href="#types-of-orbital-systems" title="Permalink to this headline">¶</a></h2>
+<p>In quantum chemistry it is common to call the initial single-particle functions for <em>atomic orbitals</em> (AO).
+We will also adhere to this convention, thus making the basis of harmonic oscillator single-particle functions the atomic orbitals of our system.
+Now, as the harmonic oscillator Hamiltonian is independent of spin we have restricted our view to the spatial part of the atomic orbitals when using quantum-systems to construct our basis elements.
+However, when moving to the full fermionic many-body picture (two = many) we have to include spin to get the full picture.
+We often talk about three kinds of orbitals depending on the restrictions put on spin.</p>
+<ol>
+<li><p>The general spin-orbital is on the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-56be74a8-cc66-4d68-ac49-e854344743ba">
+<span class="eqno">(5)<a class="headerlink" href="#equation-56be74a8-cc66-4d68-ac49-e854344743ba" title="Permalink to this equation">¶</a></span>\[\begin{align}
+        \phi(x, m_s)
+        &amp;= \varphi_1(x) \alpha(m_s) + \varphi_2(x) \beta(m_s),
+    \end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\varphi_i(x)\)</span> are the spatial oribtals, and <span class="math notranslate nohighlight">\(\sigma \in \{\alpha, \beta\}\)</span> are spin basis functions with <span class="math notranslate nohighlight">\(m_s \in \{\uparrow, \downarrow\}\)</span> the spin quantum number.
+Typical choices for the spin basis functions are</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a74e93fc-1f13-4b2f-bf13-7eacddfa4736">
+<span class="eqno">(6)<a class="headerlink" href="#equation-a74e93fc-1f13-4b2f-bf13-7eacddfa4736" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+        \alpha(\uparrow) = 1, \quad \beta(\uparrow) = 0, \\
+        \alpha(\downarrow) = 0, \quad \beta(\downarrow) = 1.
+    \end{gather}\]</div>
+</li>
+<li><p>The unrestricted spin-orbital is on the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-58201edd-9716-456f-b12b-ceed80677c67">
+<span class="eqno">(7)<a class="headerlink" href="#equation-58201edd-9716-456f-b12b-ceed80677c67" title="Permalink to this equation">¶</a></span>\[\begin{align}
+        \phi(x, m_s)
+        = \varphi_{\sigma}(x) \sigma(m_s),
+    \end{align}\]</div>
+<p>where an unrestricted spin-orbital has a definite spin-direction (either <span class="math notranslate nohighlight">\(\alpha\)</span> or <span class="math notranslate nohighlight">\(\beta\)</span>), but allows for the spatial part to be different between spin-directions.</p>
+</li>
+<li><p>The restricted spin-orbital is on the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5a61841e-a1d4-4eae-a5af-5725db4b00f2">
+<span class="eqno">(8)<a class="headerlink" href="#equation-5a61841e-a1d4-4eae-a5af-5725db4b00f2" title="Permalink to this equation">¶</a></span>\[\begin{align}
+        \phi(x, m_s)
+        = \varphi(x) \sigma(m_s),
+    \end{align}\]</div>
+<p>where the spin-orbitals have a definite spin-direction with the spatial part equal between the two spin-directions.</p>
+</li>
+</ol>
+<p>We will in this project create a general Hartree-Fock (GHF) solver which implies that we use general spin-orbitals.
+This will turn out to be easiest mathematically (when deriving the equations for GHF) and the most general formulation.
+However, the restricted and unrestricted formulations are more numerically efficient.</p>
+</div>
+<div class="section" id="adding-spin-to-the-harmonic-oscillator-basis">
+<h2>Adding spin to the harmonic oscillator basis<a class="headerlink" href="#adding-spin-to-the-harmonic-oscillator-basis" title="Permalink to this headline">¶</a></h2>
+<p>We have constructed a spatial basis of harmonic oscillator eigenstates <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span>, with spin-independent matrix elements <span class="math notranslate nohighlight">\(h_{\alpha \beta}\)</span>, <span class="math notranslate nohighlight">\(u^{\alpha \beta}_{\gamma \delta}\)</span>, etc, as described <a class="reference internal" href="#task-1-mel"><span class="std std-ref">above</span></a>.
+We now wish to include spin in the harmonic oscillator basis functions.
+The way we do this is by doubling each spatial basis function (and hence each axis in the matrix elements) essentially creating duplicates.</p>
+<p>We will denote this basis of general harmonic oscillator spin-orbitals by <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{2l}\)</span>.
+The question is then how we can go from <span class="math notranslate nohighlight">\(h_{\alpha \beta} \to h_{\mu \nu}\)</span> and similarly for the other matrix elements.
+We let the general harmonic oscillator spin-orbitals be given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ff4157e7-74dc-4766-9beb-92ac1a5f8957">
+<span class="eqno">(9)<a class="headerlink" href="#equation-ff4157e7-74dc-4766-9beb-92ac1a5f8957" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    |\psi_{\mu}\rangle
+    &amp;= |\chi_{\alpha}\rangle \otimes |\sigma\rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha = \mu // 2\)</span> (integer division), and <span class="math notranslate nohighlight">\(\sigma = \alpha\)</span> if <span class="math notranslate nohighlight">\(\mu\)</span> is even and <span class="math notranslate nohighlight">\(\sigma = \beta\)</span> if <span class="math notranslate nohighlight">\(\mu\)</span> is odd.
+The one-body Hamiltonian matrix elements are thus given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-dc3da7ac-0d42-451a-a822-670589fc9e2d">
+<span class="eqno">(10)<a class="headerlink" href="#equation-dc3da7ac-0d42-451a-a822-670589fc9e2d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    h_{\mu \nu}
+    &amp;= \langle \psi_{\mu} | \hat{h} \otimes \hat{I} | \psi_{\nu} \rangle
+    = \left(\langle \chi_{\alpha} | \otimes \langle \sigma | \right)
+    \hat{h} \otimes \hat{I} \left( | \chi_{\beta} \rangle \otimes | \tau \rangle \right)
+    \\
+    &amp;= \langle \chi_{\alpha} | \hat{h} | \chi_{\beta} \rangle
+    \langle \sigma | \tau \rangle
+    = h_{\alpha \beta} \delta_{\sigma \tau},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{I}\)</span> is the spin-basis identity operator, and we’ve chosen an orthonormal basis of spin states.
+The full general spin-orbital matrix <span class="math notranslate nohighlight">\(\mathbf{h}_{GSO}\)</span> can then be constructed from the (spatial) atomic orbital matrix <span class="math notranslate nohighlight">\(\mathbf{h}_{SpaS}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{I}_{2\times 2}\)</span> the <span class="math notranslate nohighlight">\(2 \times 2\)</span> identity matrix by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-733ab021-ee05-40c3-b0bb-04a0b6dc7b1b">
+<span class="eqno">(11)<a class="headerlink" href="#equation-733ab021-ee05-40c3-b0bb-04a0b6dc7b1b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \mathbf{h}_{GSO} = \mathbf{h}_{SpaS} \otimes \mathbf{I}_{2 \times 2},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\otimes\)</span> is the Kronecker product.
+This ensures that all even (odd) indices correspond to <span class="math notranslate nohighlight">\(\alpha\)</span> (<span class="math notranslate nohighlight">\(\beta\)</span>) spin-states.
+From <a class="reference external" href="https://github.com/Schoyen/quantum-systems">quantum-systems</a> this is done automatically when passing in a <code class="docutils literal notranslate"><span class="pre">BasisSet</span></code> to the class <code class="docutils literal notranslate"><span class="pre">GeneralOrbitalSystem</span></code>.
+Below we demonstrate how this is done for harmonic oscillator basis set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis l: </span><span class="si">{</span><span class="n">odqd</span><span class="o">.</span><span class="n">l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis grid: </span><span class="si">{</span><span class="n">odqd</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis h.shape: </span><span class="si">{</span><span class="n">odqd</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis u.shape: </span><span class="si">{</span><span class="n">odqd</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis x.shape: </span><span class="si">{</span><span class="n">odqd</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis spf.shape: </span><span class="si">{</span><span class="n">odqd</span><span class="o">.</span><span class="n">spf</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Basis l: 10
+Basis grid: (2001,)
+Basis h.shape: (10, 10)
+Basis u.shape: (10, 10, 10, 10)
+Basis x.shape: (1, 10, 10)
+Basis spf.shape: (10, 2001)
+</pre></div>
+</div>
+<script type="application/javascript">
+            setTimeout(function() {
+                var nbb_cell_id = 7;
+                var nbb_unformatted_code = "print(f\"Basis l: {odqd.l}\")\nprint(f\"Basis grid: {odqd.grid.shape}\")\nprint(f\"Basis h.shape: {odqd.h.shape}\")\nprint(f\"Basis u.shape: {odqd.u.shape}\")\nprint(f\"Basis x.shape: {odqd.position.shape}\")\nprint(f\"Basis spf.shape: {odqd.spf.shape}\")";
+                var nbb_formatted_code = "print(f\"Basis l: {odqd.l}\")\nprint(f\"Basis grid: {odqd.grid.shape}\")\nprint(f\"Basis h.shape: {odqd.h.shape}\")\nprint(f\"Basis u.shape: {odqd.u.shape}\")\nprint(f\"Basis x.shape: {odqd.position.shape}\")\nprint(f\"Basis spf.shape: {odqd.spf.shape}\")";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i < nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {
+                             nbb_cells[i].set_text(nbb_formatted_code);
+                        }
+                        break;
+                    }
+                }
+            }, 500);
+            </script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Number of particles</span>
+
+<span class="c1"># This adds spin to all matrix elements</span>
+<span class="c1"># Note that gos.l = 2 * l</span>
+<span class="c1"># Note also that odqd itself is transformed into a general orbital system.</span>
+<span class="c1"># If you want to keep the pure spatial basis you can pass in a copy, viz.</span>
+<span class="c1"># gos = GeneralOrbitalSystem(n, gos.copy_basis())</span>
+<span class="n">gos</span> <span class="o">=</span> <span class="n">GeneralOrbitalSystem</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">odqd</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GOS l: </span><span class="si">{</span><span class="n">gos</span><span class="o">.</span><span class="n">l</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GOS grid: </span><span class="si">{</span><span class="n">gos</span><span class="o">.</span><span class="n">_basis_set</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GOS h.shape: </span><span class="si">{</span><span class="n">gos</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GOS u.shape: </span><span class="si">{</span><span class="n">gos</span><span class="o">.</span><span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GOS x.shape: </span><span class="si">{</span><span class="n">gos</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GOS spf.shape: </span><span class="si">{</span><span class="n">gos</span><span class="o">.</span><span class="n">spf</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GOS l: 20
+GOS grid: (2001,)
+GOS h.shape: (20, 20)
+GOS u.shape: (20, 20, 20, 20)
+GOS x.shape: (1, 20, 20)
+GOS spf.shape: (20, 2001)
+</pre></div>
+</div>
+<script type="application/javascript">
+            setTimeout(function() {
+                var nbb_cell_id = 8;
+                var nbb_unformatted_code = "n = 2  # Number of particles\n\n# This adds spin to all matrix elements\n# Note that gos.l = 2 * l\n# Note also that odqd itself is transformed into a general orbital system.\n# If you want to keep the pure spatial basis you can pass in a copy, viz.\n# gos = GeneralOrbitalSystem(n, gos.copy_basis())\ngos = GeneralOrbitalSystem(n, odqd)\n\nprint(f\"GOS l: {gos.l}\")\nprint(f\"GOS grid: {gos._basis_set.grid.shape}\")\nprint(f\"GOS h.shape: {gos.h.shape}\")\nprint(f\"GOS u.shape: {gos.u.shape}\")\nprint(f\"GOS x.shape: {gos.position.shape}\")\nprint(f\"GOS spf.shape: {gos.spf.shape}\")";
+                var nbb_formatted_code = "n = 2  # Number of particles\n\n# This adds spin to all matrix elements\n# Note that gos.l = 2 * l\n# Note also that odqd itself is transformed into a general orbital system.\n# If you want to keep the pure spatial basis you can pass in a copy, viz.\n# gos = GeneralOrbitalSystem(n, gos.copy_basis())\ngos = GeneralOrbitalSystem(n, odqd)\n\nprint(f\"GOS l: {gos.l}\")\nprint(f\"GOS grid: {gos._basis_set.grid.shape}\")\nprint(f\"GOS h.shape: {gos.h.shape}\")\nprint(f\"GOS u.shape: {gos.u.shape}\")\nprint(f\"GOS x.shape: {gos.position.shape}\")\nprint(f\"GOS spf.shape: {gos.spf.shape}\")";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i < nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        if (nbb_cells[i].get_text() == nbb_unformatted_code) {
+                             nbb_cells[i].set_text(nbb_formatted_code);
+                        }
+                        break;
+                    }
+                }
+            }, 500);
+            </script></div>
+</div>
+<p>Looking at the output above we see that the number of basis elements <span class="math notranslate nohighlight">\(l\)</span> have been doubled.
+However, the grid and the number of dimensions (the first axis in <code class="docutils literal notranslate"><span class="pre">gos.position</span></code>) are unchanged.
+It is worth pointing out that <code class="docutils literal notranslate"><span class="pre">gos.spf[::2]</span></code> (all even indices) correspond to the spatial part of the <span class="math notranslate nohighlight">\(\alpha\)</span> component of a general spin-orbital and <code class="docutils literal notranslate"><span class="pre">gos.spf[1::2]</span></code> (all odd indices) the <span class="math notranslate nohighlight">\(\beta\)</span> component.</p>
+<div class="section" id="anti-symmetric-two-body-elements">
+<h3>Anti-symmetric two-body elements<a class="headerlink" href="#anti-symmetric-two-body-elements" title="Permalink to this headline">¶</a></h3>
+<p>When using general orbitals we often work with the anti-symmetric Coulomb elements.
+These are defined to be</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ce28c6b8-94e4-4e0e-b7e8-67f127587676">
+<span class="eqno">(12)<a class="headerlink" href="#equation-ce28c6b8-94e4-4e0e-b7e8-67f127587676" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    u^{\mu \nu}_{\kappa \lambda}
+    = \langle \psi_{\mu} \psi_{\nu} | \hat{u} | \psi_{\kappa} \psi_{\lambda} \rangle_{AS}
+    \equiv
+    \langle \psi_{\mu} \psi_{\nu} | \hat{u} | \psi_{\kappa} \psi_{\lambda} \rangle
+    -
+    \langle \psi_{\mu} \psi_{\nu} | \hat{u} | \psi_{\lambda} \psi_{\kappa} \rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(u^{\mu \nu}_{\kappa \lambda}\)</span> will be interpreted as the anti-symmetric two-body elements when using <code class="docutils literal notranslate"><span class="pre">GeneralOrbitalSystem</span></code> (this is the default behavior, however <code class="docutils literal notranslate"><span class="pre">gos</span> <span class="pre">=</span> <span class="pre">GeneralOrbitalSystem(n,</span> <span class="pre">odqd,</span> <span class="pre">anti_symmetrize=False)</span></code> will not make <code class="docutils literal notranslate"><span class="pre">gos.u</span></code> anti-symmetric).</p>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -582,11 +776,9 @@ The ground-state solutions will be real, but when we include time-evolution ever
 
       </div>
     </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-    
-  <script src="_static/js/index.d3f166471bb80abb5163.js"></script>
-
-
-    
+  None
   </body>
 </html>
