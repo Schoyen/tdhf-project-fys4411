@@ -49,6 +49,8 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Task 4: Time-dependent general Hartree-Fock solver" href="task-4-tdghf-solver.html" />
@@ -224,6 +226,24 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-general-hartree-fock-energy">
+   The general Hartree-Fock energy
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-particle-density">
+   The particle density
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -234,6 +254,32 @@
                 
   <div class="section" id="task-3-expectation-values">
 <h1>Task 3: Expectation values<a class="headerlink" href="#task-3-expectation-values" title="Permalink to this headline">¶</a></h1>
+<p>There are two main quantities that we wish to compute for the ground state in this project.
+They are the full many-body ground state energy <span class="math notranslate nohighlight">\(E\)</span> from the general Hartree-Fock method, and the particle density (also known as the one-body density and the electron density) <span class="math notranslate nohighlight">\(\rho(x)\)</span>.</p>
+<div class="section" id="the-general-hartree-fock-energy">
+<h2>The general Hartree-Fock energy<a class="headerlink" href="#the-general-hartree-fock-energy" title="Permalink to this headline">¶</a></h2>
+<p>We wish to compute the ground state energy from the Hartree-Fock ansatz, <span class="math notranslate nohighlight">\(| \Psi \rangle = |\phi_1\dots\phi_n\rangle\)</span>.
+This is done by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f24d9ba8-4365-4c87-af38-91442f58f56b">
+<span class="eqno">(25)<a class="headerlink" href="#equation-f24d9ba8-4365-4c87-af38-91442f58f56b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    E &amp;= \langle \Psi | \hat{H} | \Psi \rangle
+    = \sum_{i = 1}^{n} \langle \phi_i | \hat{h} | \phi_i \rangle
+    + \frac{1}{2} \sum_{i, j = 1}^{n}
+    \langle \phi_i \phi_j | \hat{u} | \phi_i \phi_j \rangle_{AS},
+\end{align}\]</div>
+<p>where the molecular orbitals are the optimized Hartree-Fock orbitals.
+Inserting the basis expansion the energy can be found as a function of the coefficient matrices and the atomic orbital matrix elements.</p>
+</div>
+<div class="section" id="the-particle-density">
+<h2>The particle density<a class="headerlink" href="#the-particle-density" title="Permalink to this headline">¶</a></h2>
+<p>The particle density can be computed from the single-particle functions evaluated on a grid, and the one-body density matrix.
+We have already found the one-body density matrix when constructing the Fock matrix, it is given by <span class="math notranslate nohighlight">\(D_{\nu \mu} = \sum_{i = 1}^{n} C^{*}_{\mu i} C_{\nu i}\)</span>.
+We can then compute the particle density from</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4c8436e6-63ef-4520-acae-7a07127105b8">
+<span class="eqno">(26)<a class="headerlink" href="#equation-4c8436e6-63ef-4520-acae-7a07127105b8" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \rho(x) = \sum_{\mu, \nu = 1}^{l} \psi^{*}_{\mu}(x) D_{\nu \mu} \psi_{\nu}(x)
+\end{align}\]</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -286,6 +332,6 @@
   
   <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-  None
+  
   </body>
 </html>

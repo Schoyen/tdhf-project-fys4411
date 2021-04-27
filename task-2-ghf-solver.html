@@ -251,8 +251,8 @@
 <h1>Task 2: General Hartree-Fock solver<a class="headerlink" href="#task-2-general-hartree-fock-solver" title="Permalink to this headline">¶</a></h1>
 <p>Having set up an initial single-particle basis set <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span> we now set out to find the ground state of the two-body fermion problem.
 The full time-independent Hamiltonian used by <span id="id1">[<a class="reference internal" href="intro.html#id3"><span>ZKBS04</span></a>]</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d819e94b-5b29-45ba-a019-39e9387843f4">
-<span class="eqno">(13)<a class="headerlink" href="#equation-d819e94b-5b29-45ba-a019-39e9387843f4" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5dd286e8-dda5-4cad-8f27-2c10b7d5d821">
+<span class="eqno">(13)<a class="headerlink" href="#equation-5dd286e8-dda5-4cad-8f27-2c10b7d5d821" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{H}
     = \hat{h} + \hat{u}
     = \sum_{i = 1}^{n}\left(
@@ -263,15 +263,15 @@ The full time-independent Hamiltonian used by <span id="id1">[<a class="referenc
 \end{align}\]</div>
 <p>where the number of particles <span class="math notranslate nohighlight">\(n = 2\)</span>, <span class="math notranslate nohighlight">\(a = 0.25\)</span>, <span class="math notranslate nohighlight">\(\alpha = 1\)</span> (not to be confused with the index <span class="math notranslate nohighlight">\(\alpha\)</span> in the basis of harmonic oscillator eigenstates), and <span class="math notranslate nohighlight">\(\omega = 0.25\)</span>.</p>
 <p>We start from the time-independent Schrödinger equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-56f59746-f6c8-4222-aa5d-15c67fb63f7a">
-<span class="eqno">(14)<a class="headerlink" href="#equation-56f59746-f6c8-4222-aa5d-15c67fb63f7a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-21cba3e8-39e8-4754-afc3-231445dc9d76">
+<span class="eqno">(14)<a class="headerlink" href="#equation-21cba3e8-39e8-4754-afc3-231445dc9d76" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{H} | \Psi \rangle = E | \Psi \rangle,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(| \Psi \rangle\)</span> is a many-body wave function.
 We know that in the non-interacting case the exact ground state of the Hamiltonian will be a single Slater determinant (which we denote <span class="math notranslate nohighlight">\(| \Phi \rangle\)</span>) of the lowest single-particle eigenstates.
 This motivates the ansatz of using a single Slater determinant for the full many-body problem</p>
-<div class="amsmath math notranslate nohighlight" id="equation-85a2c3da-a1eb-4e0b-ac05-eefa5d392e9c">
-<span class="eqno">(15)<a class="headerlink" href="#equation-85a2c3da-a1eb-4e0b-ac05-eefa5d392e9c" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0a0a0f23-223e-4b13-9b18-a43a47536608">
+<span class="eqno">(15)<a class="headerlink" href="#equation-0a0a0f23-223e-4b13-9b18-a43a47536608" title="Permalink to this equation">¶</a></span>\[\begin{align}
     | \Psi \rangle \approx | \Phi \rangle
     = | \phi_1 \phi_2 \dots \phi_n \rangle,
 \end{align}\]</div>
@@ -280,16 +280,16 @@ This motivates the ansatz of using a single Slater determinant for the full many
 <p class="admonition-title">Note</p>
 <p>We use a convention where split up the set of molecular orbitals into a set of <em>occupied</em> and <em>virtual</em> orbitals.
 That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83d160e5-4c5a-4017-88e0-1fb43bd03b08">
-<span class="eqno">(16)<a class="headerlink" href="#equation-83d160e5-4c5a-4017-88e0-1fb43bd03b08" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9bdb54e5-aef3-4186-ad94-813001ac7e5d">
+<span class="eqno">(16)<a class="headerlink" href="#equation-9bdb54e5-aef3-4186-ad94-813001ac7e5d" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \{ \phi_p \}_{p = 1}^{k}
     = \{ \phi_i \}_{i = 1}^{n} \cup \{ \phi_a \}_{a = n + 1}^{k},
 \end{align}\]</div>
 <p>where we let the indices <span class="math notranslate nohighlight">\(i, j, k, l, \dots \in \{1, \dots, n\}\)</span> denote the occupied orbitals, i.e., the orbitals that are contained in the Hartree-Fock Slater determinant, <span class="math notranslate nohighlight">\(a, b, c, d, \dots \in \{n + 1, \dots, k \}\)</span> are the indices of the virtual orbitals that are not contained in the reference determinant, and <span class="math notranslate nohighlight">\(p, q, r, s, \dots \in \{1, \dots, k\}\)</span> the full set of orbitals.</p>
 </div>
 <p>The Hartree-Fock method method finds the Slater determinant that minimizes the energy, i.e., gets closest to the “true” many-body ground state energy <span class="math notranslate nohighlight">\(E_{gs}\)</span> of the problem using the variational principle</p>
-<div class="amsmath math notranslate nohighlight" id="equation-da133bba-52de-40f9-bc20-7adc40faaa21">
-<span class="eqno">(17)<a class="headerlink" href="#equation-da133bba-52de-40f9-bc20-7adc40faaa21" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-847c9cbb-139b-41e2-a4bd-9c506f175ecc">
+<span class="eqno">(17)<a class="headerlink" href="#equation-847c9cbb-139b-41e2-a4bd-9c506f175ecc" title="Permalink to this equation">¶</a></span>\[\begin{align}
     E_{gs} \leq E[\Phi, \Phi^{*}] = E[\phi_1, \dots, \phi_n] = \langle \Phi | \hat{H} | \Phi \rangle,
 \end{align}\]</div>
 <p>subject to the constraint that the molecular orbitals are orthonormal, <span class="math notranslate nohighlight">\(\langle \phi_i | \phi_j \rangle = \delta_{ij}\)</span> (<span class="math notranslate nohighlight">\(\implies \langle \Phi | \Phi \rangle = 1\)</span>).
@@ -316,8 +316,8 @@ To include this requirement in the variational principle we use Lagrange’s met
 <p>where <span class="math notranslate nohighlight">\(\hat{f}\)</span> is the single-particle Fock-operator.
 Note that this equation is not limited to the occupied states, but to all the molecular orbitals.
 The matrix elements of the single-particle Fock operator are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6fe1f421-2498-40d5-827b-b93560325b68">
-<span class="eqno">(20)<a class="headerlink" href="#equation-6fe1f421-2498-40d5-827b-b93560325b68" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fcf26c9e-2a77-4512-a5a3-8d249d805c78">
+<span class="eqno">(20)<a class="headerlink" href="#equation-fcf26c9e-2a77-4512-a5a3-8d249d805c78" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \langle \psi | \hat{f} | \xi \rangle
     = \langle \psi | \hat{h} | \xi \rangle
     + \sum_{i = 1}^{n} \langle \psi \phi_i | \hat{u} | \xi \phi_i \rangle
@@ -343,8 +343,8 @@ However, in this project we limit our attention to <span class="math notranslate
 \]</div>
 <p>where the coefficients <span class="math notranslate nohighlight">\(C_{\mu p}\)</span> now become our primary unknowns in the Hartree-Fock method.
 Projecting the AO basis onto equation <a class="reference internal" href="#equation-eq-canonical-hf-equation">(19)</a> we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b0c5f75-37d5-491f-804f-bef5f34e7de7">
-<span class="eqno">(22)<a class="headerlink" href="#equation-8b0c5f75-37d5-491f-804f-bef5f34e7de7" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+<div class="amsmath math notranslate nohighlight" id="equation-e664c840-ab8e-4909-b3c4-da2764c248ed">
+<span class="eqno">(22)<a class="headerlink" href="#equation-e664c840-ab8e-4909-b3c4-da2764c248ed" title="Permalink to this equation">¶</a></span>\[\begin{gather}
     \langle \psi_{\mu} | \hat{f} | \phi_p \rangle
     = \varepsilon_{p} \langle \psi_{\mu} | \phi_p \rangle
     \implies
@@ -360,8 +360,8 @@ Projecting the AO basis onto equation <a class="reference internal" href="#equat
 The last eigenvalue equation is known as the Roothan-Hall equations.
 Here both <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\varepsilon}\)</span> are the primary unknowns.
 We now need to construct the Fock matrix in the atomic orbital basis, that is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b17df56a-f2f6-441a-8ee1-58ff9b29b1b0">
-<span class="eqno">(23)<a class="headerlink" href="#equation-b17df56a-f2f6-441a-8ee1-58ff9b29b1b0" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8cd5e93a-3d0c-460d-9925-ac0726f39d15">
+<span class="eqno">(23)<a class="headerlink" href="#equation-8cd5e93a-3d0c-460d-9925-ac0726f39d15" title="Permalink to this equation">¶</a></span>\[\begin{align}
     f_{\mu \nu}
     &amp;= \langle \psi_{\mu} | \hat{f} | \psi_{\nu} \rangle
     = \langle \psi_{\mu} | \hat{h} | \psi_{\nu} \rangle
@@ -369,8 +369,8 @@ We now need to construct the Fock matrix in the atomic orbital basis, that is</p
     \langle \psi_{\mu} \phi_i | \hat{u} | \psi_{\nu} \phi_i \rangle_{AS}.
 \end{align}\]</div>
 <p>Replacing the sum over the occupied molecular orbitals in the two-body elements by equation <a class="reference internal" href="#equation-eq-basis-transformation">(21)</a> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2dd5c426-1d20-47e2-b599-83cb94a5a162">
-<span class="eqno">(24)<a class="headerlink" href="#equation-2dd5c426-1d20-47e2-b599-83cb94a5a162" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a8add902-afb0-46ed-a117-bad99006bb10">
+<span class="eqno">(24)<a class="headerlink" href="#equation-a8add902-afb0-46ed-a117-bad99006bb10" title="Permalink to this equation">¶</a></span>\[\begin{align}
     f_{\mu \nu}
     &amp;= \langle \psi_{\mu} | \hat{h} | \psi_{\nu} \rangle
     + \sum_{i = 1}^{n}
@@ -436,6 +436,6 @@ To get around this we use a technique called self-consistent field iterations.</
   
   <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-  None
+  
   </body>
 </html>
