@@ -49,6 +49,8 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Task 5: Time-dependent expectation values" href="task-5-td-expectation-values.html" />
@@ -224,6 +226,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#time-dependent-hartree-fock">
+   Time-dependent Hartree-Fock
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -234,6 +249,61 @@
                 
   <div class="section" id="task-4-time-dependent-general-hartree-fock-solver">
 <h1>Task 4: Time-dependent general Hartree-Fock solver<a class="headerlink" href="#task-4-time-dependent-general-hartree-fock-solver" title="Permalink to this headline">¶</a></h1>
+<p>Having constructed and solved the general Hartree-Fock ground state problem, we now set out to shine a monochromatic dipole laser on the system.
+This means appending a time-dependent operator to the Hamiltonian.
+The operator describes a semi-classical electric field in the dipole approximation in the length gauge.
+For a more thorough discussion of this operator check out chapters 2 - 2.4 in <span id="id1">[<a class="reference internal" href="intro.html#id5"><span>JKP09</span></a>]</span>.
+The operator will in the one-dimensional case be described by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a0ce9ba2-8f65-4f9c-9a0d-8896cd005eb4">
+<span class="eqno">(27)<a class="headerlink" href="#equation-a0ce9ba2-8f65-4f9c-9a0d-8896cd005eb4" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \hat{h}_I(t) = -f(t) \hat{d},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{d} \equiv q\hat{x}\)</span> is the dipole moment operator with <span class="math notranslate nohighlight">\(q = -1\)</span> the electron charge, and <span class="math notranslate nohighlight">\(f(t)\)</span> the time-dependent laser field.
+From <span id="id2">[<a class="reference internal" href="intro.html#id3"><span>ZKBS04</span></a>]</span> we have <span class="math notranslate nohighlight">\(f(t) = \mathcal{E}_0 \sin(\omega t)\)</span>, (note that <span class="math notranslate nohighlight">\(\omega\)</span> is not necessarily the same as the harmonic oscillator well frequency) which describes a monochromatic laser field that is always active.</p>
+<div class="section" id="time-dependent-hartree-fock">
+<h2>Time-dependent Hartree-Fock<a class="headerlink" href="#time-dependent-hartree-fock" title="Permalink to this headline">¶</a></h2>
+<p>In the time-dependent Hartree-Fock method we use an ansatz for the many-body wave function as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b6cb3277-1562-4331-b46d-3ed89e8c506b">
+<span class="eqno">(28)<a class="headerlink" href="#equation-b6cb3277-1562-4331-b46d-3ed89e8c506b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    | \Psi(t) \rangle = | \Phi(t) \rangle = | \phi_1(t) \phi_2(t) \dots \phi_n(t) \rangle,
+\end{align}\]</div>
+<p>where the time-dependence is kept in the molecular orbitals.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Add derivation of the time-dependent Hartree-Fock equations.</p>
+</div>
+<p>The time-evolution of the molecular orbitals is described by the time-dependent Hartree-Fock equation</p>
+<div class="amsmath math notranslate nohighlight" id="equation-93af14b7-9a32-45af-b871-ba08ca796369">
+<span class="eqno">(29)<a class="headerlink" href="#equation-93af14b7-9a32-45af-b871-ba08ca796369" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    i \frac{\text{d}}{\text{d} t} | \phi_p(t) \rangle
+    = \hat{f}(t) | \phi_p(t) \rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{f}(t)\)</span> is the time-dependent Fock operator and we have set <span class="math notranslate nohighlight">\(\hbar = 1\)</span>.
+We have chosen to expand the time-independent molecular orbitals in a known basis of atomic orbitals (the harmonic oscillator eigenfunctions).
+Here as well we choose to expand our time-dependent molecular orbitals in a time-independent basis of atomic orbitals, and let the time-evolution occur in the coefficients.
+That is,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-25e3e99f-dcc4-4de2-a065-17e79188f9d8">
+<span class="eqno">(30)<a class="headerlink" href="#equation-25e3e99f-dcc4-4de2-a065-17e79188f9d8" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    | \phi_p(t) \rangle
+    = \sum_{\mu = 1}^{l} C_{\mu p}(t) | \psi_{\mu} \rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{l}\)</span> is a time-independent atomic orbital basis which we assume to be orthonormal.
+Inserting this expansion into the time-dependent Hartree-Fock equations and left-projecting with <span class="math notranslate nohighlight">\(\langle \psi_{\mu}\)</span> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3fe366db-57fa-4ce6-b63d-5f03414be225">
+<span class="eqno">(31)<a class="headerlink" href="#equation-3fe366db-57fa-4ce6-b63d-5f03414be225" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+    i \frac{\text{d}}{\text{d} t} \sum_{\nu = 1}^{l} C_{\nu p}(t) | \psi_{\nu} \rangle
+    = \hat{f}(t) \sum_{\nu = 1}^{l} C_{\nu p}(t) | \psi_{\nu} \rangle
+    \\
+    \implies
+    i \sum_{\nu = 1}^{l} \dot{C}_{\nu p}(t)
+    \langle \psi_{\mu} | \psi_{\nu} \rangle
+    = i \dot{C}_{\mu p}(t)
+    = \langle \psi_{\mu} | \hat{f}(t) | \psi_{\nu} \rangle C_{\nu p}(t)
+    = f_{\mu \nu}(t) C_{\nu p}(t),
+\end{gather}\]</div>
+<p>where we now need to find the matrix elements of the time-dependent Fock operator in the atomic orbital basis.
+As the laser field interaction operator <span class="math notranslate nohighlight">\(\hat{h}_I(t)\)</span> is a one-body operator, the time-dependent Fock operator will need to add this term.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

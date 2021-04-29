@@ -260,8 +260,8 @@ They are the full many-body ground state energy <span class="math notranslate no
 <h2>The general Hartree-Fock energy<a class="headerlink" href="#the-general-hartree-fock-energy" title="Permalink to this headline">¶</a></h2>
 <p>We wish to compute the ground state energy from the Hartree-Fock ansatz, <span class="math notranslate nohighlight">\(| \Psi \rangle = |\phi_1\dots\phi_n\rangle\)</span>.
 This is done by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f24d9ba8-4365-4c87-af38-91442f58f56b">
-<span class="eqno">(25)<a class="headerlink" href="#equation-f24d9ba8-4365-4c87-af38-91442f58f56b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c1260a54-e1e0-4d53-a989-55976d3b1085">
+<span class="eqno">(25)<a class="headerlink" href="#equation-c1260a54-e1e0-4d53-a989-55976d3b1085" title="Permalink to this equation">¶</a></span>\[\begin{align}
     E &amp;= \langle \Psi | \hat{H} | \Psi \rangle
     = \sum_{i = 1}^{n} \langle \phi_i | \hat{h} | \phi_i \rangle
     + \frac{1}{2} \sum_{i, j = 1}^{n}
@@ -275,8 +275,8 @@ Inserting the basis expansion the energy can be found as a function of the coeff
 <p>The particle density can be computed from the single-particle functions evaluated on a grid, and the one-body density matrix.
 We have already found the one-body density matrix when constructing the Fock matrix, it is given by <span class="math notranslate nohighlight">\(D_{\nu \mu} = \sum_{i = 1}^{n} C^{*}_{\mu i} C_{\nu i}\)</span>.
 We can then compute the particle density from</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4c8436e6-63ef-4520-acae-7a07127105b8">
-<span class="eqno">(26)<a class="headerlink" href="#equation-4c8436e6-63ef-4520-acae-7a07127105b8" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e9a99528-f581-4567-92c9-75689121aeae">
+<span class="eqno">(26)<a class="headerlink" href="#equation-e9a99528-f581-4567-92c9-75689121aeae" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \rho(x) = \sum_{\mu, \nu = 1}^{l} \psi^{*}_{\mu}(x) D_{\nu \mu} \psi_{\nu}(x)
 \end{align}\]</div>
 </div>
