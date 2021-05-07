@@ -236,6 +236,11 @@
    Time-dependent overlap
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-body-expectation-values">
+   One-body expectation values
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -252,13 +257,49 @@
 <div class="section" id="time-dependent-overlap">
 <h2>Time-dependent overlap<a class="headerlink" href="#time-dependent-overlap" title="Permalink to this headline">¶</a></h2>
 <p>We compute the time-dependent overlap between two Slater determinants (with orthonormal atomic orbital basis functions) by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8c19f8b-6c71-4cae-86ad-ca76fe59300a">
-<span class="eqno">(32)<a class="headerlink" href="#equation-b8c19f8b-6c71-4cae-86ad-ca76fe59300a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fe2cf419-ddc3-4aab-ae0c-72910b09c56e">
+<span class="eqno">(32)<a class="headerlink" href="#equation-fe2cf419-ddc3-4aab-ae0c-72910b09c56e" title="Permalink to this equation">¶</a></span>\[\begin{align}
     P(t, t_0)
     &amp;= \bigl|\langle \Phi(t) | \Phi(t_0) \rangle \bigr|^2
-    = \bigl|\det\bigl(C^{\dagger}(t) C(t_0)\bigr)\bigr|^2,
+    = \bigl|\det\bigl(C^{\dagger}_o(t) C_o(t_0)\bigr)\bigr|^2,
 \end{align}\]</div>
-<p>where <span class="math notranslate nohighlight">\(C(t)\)</span> is the coefficient matrix of the time-evolved state.</p>
+<p>where <span class="math notranslate nohighlight">\(C_o(t)\)</span> is the coefficient matrix of the time-evolved state with <span class="math notranslate nohighlight">\(o\)</span> denoting the occupied columns.</p>
+</div>
+<div class="section" id="one-body-expectation-values">
+<h2>One-body expectation values<a class="headerlink" href="#one-body-expectation-values" title="Permalink to this headline">¶</a></h2>
+<p>Given a one-body operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> we wish to compute the time-dependent expectation values.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A one-body operator is an operator that acts on a single particle at a time.
+For example, the position operator <span class="math notranslate nohighlight">\(\hat{x}\)</span> is a one-body operator, whereas the Coulomb interaction <span class="math notranslate nohighlight">\(\hat{u}\)</span> is a two-body operator as it applies to the interaction between two particles at a time.</p>
+</div>
+<p>Having already found the matrix elements of <span class="math notranslate nohighlight">\(\hat{A}\)</span> in a static (time-independent) atomic basis <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{l}\)</span>, we can compute the expectation value of this operator by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4009ceb5-45b4-446d-9fb6-ac69a80a05de">
+<span class="eqno">(33)<a class="headerlink" href="#equation-4009ceb5-45b4-446d-9fb6-ac69a80a05de" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \langle A(t) \rangle
+    &amp;= \langle \psi_{\mu} | \hat{A} | \psi_{\nu} \rangle D_{\nu \mu}(t),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(D_{\nu \mu}(t) = \sum_{i = 1}^{n} C^{*}_{\mu i}(t) C_{\nu i}(t)\)</span> is the time-evolved Hartree-Fock density matrix.
+Alternatively, by transforming the one-body operator to the time-evolved molecular orbital basis <span class="math notranslate nohighlight">\(\{\psi_p(t)\}_{p = 1}^{k}\)</span> we can compute the expectation value from</p>
+<div class="amsmath math notranslate nohighlight" id="equation-56d5a8e0-302d-4bba-9a21-ac1b4cb62d5a">
+<span class="eqno">(34)<a class="headerlink" href="#equation-56d5a8e0-302d-4bba-9a21-ac1b4cb62d5a" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \langle A(t) \rangle
+    &amp;=
+    \langle \phi_{p}(t) | \hat{A} | \phi_q(t) \rangle
+    \rho_{q p},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho_{q p}\)</span> is the one-body density matrix in the time-evolved Hartree-Fock basis.
+This matrix is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-13b37a13-1c59-41ae-8587-a6acca0257fe">
+<span class="eqno">(35)<a class="headerlink" href="#equation-13b37a13-1c59-41ae-8587-a6acca0257fe" title="Permalink to this equation">¶</a></span>\[\begin{align}
+    \boldsymbol{\rho}
+    &amp;= \begin{pmatrix}
+        \boldsymbol{I}_{n \times n} &amp; \boldsymbol{0}_{n \times (k - n)} \\
+        \boldsymbol{0}_{(k - n) \times n} &amp; \boldsymbol{0}_{(k - n) \times (k - n)}
+    \end{pmatrix},
+\end{align}\]</div>
+<p>that is, the matrix is the identity in the occupied block and zero elsehwere.
+Both ways of computing the expectation value give the same value.</p>
 </div>
 </div>
 

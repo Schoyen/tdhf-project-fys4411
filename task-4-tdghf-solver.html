@@ -254,8 +254,8 @@ This means appending a time-dependent operator to the Hamiltonian.
 The operator describes a semi-classical electric field in the dipole approximation in the length gauge.
 For a more thorough discussion of this operator check out chapters 2 - 2.4 in <span id="id1">[<a class="reference internal" href="intro.html#id5"><span>JKP09</span></a>]</span>.
 The operator will in the one-dimensional case be described by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e8429c39-e946-4d9a-9e46-daf495277f38">
-<span class="eqno">(27)<a class="headerlink" href="#equation-e8429c39-e946-4d9a-9e46-daf495277f38" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3710e1cc-9967-443a-8141-73c4c27b4c78">
+<span class="eqno">(27)<a class="headerlink" href="#equation-3710e1cc-9967-443a-8141-73c4c27b4c78" title="Permalink to this equation">¶</a></span>\[\begin{align}
     \hat{h}_I(t) = -f(t) \hat{d},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{d} \equiv q\hat{x}\)</span> is the dipole moment operator with <span class="math notranslate nohighlight">\(q = -1\)</span> the electron charge, and <span class="math notranslate nohighlight">\(f(t)\)</span> the time-dependent laser field.
@@ -263,8 +263,8 @@ From <span id="id2">[<a class="reference internal" href="intro.html#id3"><span>Z
 <div class="section" id="time-dependent-hartree-fock">
 <h2>Time-dependent Hartree-Fock<a class="headerlink" href="#time-dependent-hartree-fock" title="Permalink to this headline">¶</a></h2>
 <p>In the time-dependent Hartree-Fock method we use an ansatz for the many-body wave function as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92717d1b-fe3d-4bb5-80f8-20c60a4fe51b">
-<span class="eqno">(28)<a class="headerlink" href="#equation-92717d1b-fe3d-4bb5-80f8-20c60a4fe51b" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-740c6fc8-f5fc-45ec-b0de-ac11eb81d2cf">
+<span class="eqno">(28)<a class="headerlink" href="#equation-740c6fc8-f5fc-45ec-b0de-ac11eb81d2cf" title="Permalink to this equation">¶</a></span>\[\begin{align}
     | \Psi(t) \rangle = | \Phi(t) \rangle = | \phi_1(t) \phi_2(t) \dots \phi_n(t) \rangle,
 \end{align}\]</div>
 <p>where the time-dependence is kept in the molecular orbitals.</p>
@@ -273,8 +273,8 @@ From <span id="id2">[<a class="reference internal" href="intro.html#id3"><span>Z
 <p>Add derivation of the time-dependent Hartree-Fock equations.</p>
 </div>
 <p>The time-evolution of the molecular orbitals is described by the time-dependent Hartree-Fock equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-921b3874-4d61-4e29-9709-918652630676">
-<span class="eqno">(29)<a class="headerlink" href="#equation-921b3874-4d61-4e29-9709-918652630676" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-326411c6-d10a-4ccf-81a9-864fb061f5d2">
+<span class="eqno">(29)<a class="headerlink" href="#equation-326411c6-d10a-4ccf-81a9-864fb061f5d2" title="Permalink to this equation">¶</a></span>\[\begin{align}
     i \frac{\text{d}}{\text{d} t} | \phi_p(t) \rangle
     = \hat{f}(t) | \phi_p(t) \rangle,
 \end{align}\]</div>
@@ -282,15 +282,15 @@ From <span id="id2">[<a class="reference internal" href="intro.html#id3"><span>Z
 We have chosen to expand the time-independent molecular orbitals in a known basis of atomic orbitals (the harmonic oscillator eigenfunctions).
 Here as well we choose to expand our time-dependent molecular orbitals in a time-independent basis of atomic orbitals, and let the time-evolution occur in the coefficients.
 That is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4099d3c8-9af1-42b6-bc53-ea34d7c1f911">
-<span class="eqno">(30)<a class="headerlink" href="#equation-4099d3c8-9af1-42b6-bc53-ea34d7c1f911" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-243cf380-3946-4d59-a5ab-9ffa07628f65">
+<span class="eqno">(30)<a class="headerlink" href="#equation-243cf380-3946-4d59-a5ab-9ffa07628f65" title="Permalink to this equation">¶</a></span>\[\begin{align}
     | \phi_p(t) \rangle
     = \sum_{\mu = 1}^{l} C_{\mu p}(t) | \psi_{\mu} \rangle,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{l}\)</span> is a time-independent atomic orbital basis which we assume to be orthonormal.
-Inserting this expansion into the time-dependent Hartree-Fock equations and left-projecting with <span class="math notranslate nohighlight">\(\langle \psi_{\mu}\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ab5108e6-dd9c-4bba-918c-c2a21589e8ab">
-<span class="eqno">(31)<a class="headerlink" href="#equation-ab5108e6-dd9c-4bba-918c-c2a21589e8ab" title="Permalink to this equation">¶</a></span>\[\begin{gather}
+Inserting this expansion into the time-dependent Hartree-Fock equations and left-projecting with <span class="math notranslate nohighlight">\(\langle \psi_{\mu}|\)</span> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d9603fe2-a1e3-4ac4-8033-8ee6fbfcba2b">
+<span class="eqno">(31)<a class="headerlink" href="#equation-d9603fe2-a1e3-4ac4-8033-8ee6fbfcba2b" title="Permalink to this equation">¶</a></span>\[\begin{gather}
     i \frac{\text{d}}{\text{d} t} \sum_{\nu = 1}^{l} C_{\nu p}(t) | \psi_{\nu} \rangle
     = \hat{f}(t) \sum_{\nu = 1}^{l} C_{\nu p}(t) | \psi_{\nu} \rangle
     \\
