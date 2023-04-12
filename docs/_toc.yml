@@ -2,7 +2,7 @@ format: jb-article
 root: intro
 sections:
 - file: task-1-single-particle-basis
-- file: task-2-ghf-solver
+- file: task-2-rhf-solver
 - file: task-3-expectation-values
-- file: task-4-tdghf-solver
+- file: task-4-tdrhf-solver
 - file: task-5-td-expectation-values
