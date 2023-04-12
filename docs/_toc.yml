@@ -1,10 +1,8 @@
-# Table of content
-# Learn more at https://jupyterbook.org/customize/toc.html
-#
-- file: intro
-  sections:
-    - file: task-1-single-particle-basis
-    - file: task-2-ghf-solver
-    - file: task-3-expectation-values
-    - file: task-4-tdghf-solver
-    - file: task-5-td-expectation-values
+format: jb-article
+root: intro
+sections:
+- file: task-1-single-particle-basis
+- file: task-2-ghf-solver
+- file: task-3-expectation-values
+- file: task-4-tdghf-solver
+- file: task-5-td-expectation-values
