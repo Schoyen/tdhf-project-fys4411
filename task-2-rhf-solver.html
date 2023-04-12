@@ -1,0 +1,677 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Task 2: General Hartree-Fock solver &#8212; FYS4411 - Project 2 TDHF</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'task-2-rhf-solver';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Task 3: Expectation values" href="task-3-expectation-values.html" />
+    <link rel="prev" title="Task 1: Single-particle basis" href="task-1-single-particle-basis.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Time-dependent Hartree-Fock theory
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="task-1-single-particle-basis.html">Task 1: Single-particle basis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Task 2: General Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-3-expectation-values.html">Task 3: Expectation values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent general Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-5-td-expectation-values.html">Task 5: Time-dependent expectation values</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Schoyen/tdhf-project-fys4411" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Schoyen/tdhf-project-fys4411/issues/new?title=Issue%20on%20page%20%2Ftask-2-rhf-solver.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/task-2-rhf-solver.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Task 2: General Hartree-Fock solver</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-orbital-systems">Types of orbital systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-roothan-hall-equations">The Roothan-Hall equations</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="task-2-general-hartree-fock-solver">
+<h1>Task 2: General Hartree-Fock solver<a class="headerlink" href="#task-2-general-hartree-fock-solver" title="Permalink to this heading">#</a></h1>
+<p>Having set up an initial single-particle basis set <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span> we now set out to find the ground state of the two-body fermion problem.
+The full time-independent Hamiltonian used by <span id="id1">[<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f16346b6-5499-4e9d-a17a-e5c06cdbf035">
+<span class="eqno">(4)<a class="headerlink" href="#equation-f16346b6-5499-4e9d-a17a-e5c06cdbf035" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \hat{H}
+    = \hat{h} + \hat{u}
+    = \sum_{i = 1}^{n}\left(
+        -\frac{1}{2}\frac{\text{d}^2}{\text{d}x^2}
+        + \frac{1}{2}\omega^2 x^2
+    \right)
+    + \sum_{i = 1}^{n} \sum_{j = i + 1}^{n} \frac{\alpha}{\sqrt{(x_i - x_j)^2 + a^2}},
+\end{align}\]</div>
+<p>where the number of particles <span class="math notranslate nohighlight">\(n = 2\)</span>, <span class="math notranslate nohighlight">\(a = 0.25\)</span>, <span class="math notranslate nohighlight">\(\alpha = 1\)</span> (not to be confused with the index <span class="math notranslate nohighlight">\(\alpha\)</span> in the basis of harmonic oscillator eigenstates), and <span class="math notranslate nohighlight">\(\omega = 0.25\)</span>.</p>
+<p>We start from the time-independent Schrödinger equation</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8929e765-b441-4187-b8c4-1a7952ead88b">
+<span class="eqno">(5)<a class="headerlink" href="#equation-8929e765-b441-4187-b8c4-1a7952ead88b" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \hat{H} | \Psi \rangle = E | \Psi \rangle,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(| \Psi \rangle\)</span> is a many-body wave function.
+We know that in the non-interacting case the exact ground state of the Hamiltonian will be a single Slater determinant (which we denote <span class="math notranslate nohighlight">\(| \Phi \rangle\)</span>) of the lowest single-particle eigenstates.
+This motivates the ansatz of using a single Slater determinant for the full many-body problem</p>
+<div class="amsmath math notranslate nohighlight" id="equation-533407ab-00c5-459c-bb05-555cbae37866">
+<span class="eqno">(6)<a class="headerlink" href="#equation-533407ab-00c5-459c-bb05-555cbae37866" title="Permalink to this equation">#</a></span>\[\begin{align}
+    | \Psi \rangle \approx | \Phi \rangle
+    = | \phi_1 \phi_2 \dots \phi_n \rangle,
+\end{align}\]</div>
+<p>where the <span class="math notranslate nohighlight">\(n\)</span> lowest <em>molecular orbitals</em> (MO) (also known as the Hartree-Fock orbitals) from <span class="math notranslate nohighlight">\(\{\phi_p\}_{p = 1}^{k}\)</span> (<span class="math notranslate nohighlight">\(k \leq n\)</span>) are the primary unknowns.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use a convention where split up the set of molecular orbitals into a set of <em>occupied</em> and <em>virtual</em> orbitals.
+That is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4306e86a-4252-47d0-95ae-9815ac47abf7">
+<span class="eqno">(7)<a class="headerlink" href="#equation-4306e86a-4252-47d0-95ae-9815ac47abf7" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \{ \phi_p \}_{p = 1}^{k}
+    = \{ \phi_i \}_{i = 1}^{n} \cup \{ \phi_a \}_{a = n + 1}^{k},
+\end{align}\]</div>
+<p>where we let the indices <span class="math notranslate nohighlight">\(i, j, k, l, \dots \in \{1, \dots, n\}\)</span> denote the occupied orbitals, i.e., the orbitals that are contained in the Hartree-Fock Slater determinant, <span class="math notranslate nohighlight">\(a, b, c, d, \dots \in \{n + 1, \dots, k \}\)</span> are the indices of the virtual orbitals that are not contained in the reference determinant, and <span class="math notranslate nohighlight">\(p, q, r, s, \dots \in \{1, \dots, k\}\)</span> the full set of orbitals.</p>
+</div>
+<p>The Hartree-Fock method method finds the Slater determinant that minimizes the energy, i.e., gets closest to the “true” many-body ground state energy <span class="math notranslate nohighlight">\(E_{gs}\)</span> of the problem using the variational principle</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4e9b1021-4198-4692-8352-27f7d2409561">
+<span class="eqno">(8)<a class="headerlink" href="#equation-4e9b1021-4198-4692-8352-27f7d2409561" title="Permalink to this equation">#</a></span>\[\begin{align}
+    E_{gs} \leq E[\Phi, \Phi^{*}] = E[\phi_1, \dots, \phi_n] = \langle \Phi | \hat{H} | \Phi \rangle,
+\end{align}\]</div>
+<p>subject to the constraint that the molecular orbitals are orthonormal, <span class="math notranslate nohighlight">\(\langle \phi_i | \phi_j \rangle = \delta_{ij}\)</span> (<span class="math notranslate nohighlight">\(\implies \langle \Phi | \Phi \rangle = 1\)</span>).
+To include this requirement in the variational principle we use Lagrange’s method of undetermined multipliers</p>
+<div class="math notranslate nohighlight" id="equation-eq-hf-lagrangian">
+<span class="eqno">(9)<a class="headerlink" href="#equation-eq-hf-lagrangian" title="Permalink to this equation">#</a></span>\[
+    L[\phi_1, \dots, \phi_n, \boldsymbol{\lambda}]
+    = E[\phi_1, \dots, \phi_n]
+    - \lambda_{qp} \left(
+        \langle \phi_p | \phi_q \rangle
+        - \delta_{pq}
+    \right),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span> are the Lagrange multipliers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Add derivation of the (canonical) GHF-equations.</p>
+</div>
+<p>Minimization of the Lagrangian in <a class="reference internal" href="#equation-eq-hf-lagrangian">(9)</a> yields the Hartree-Fock eigenvalue equation</p>
+<div class="math notranslate nohighlight" id="equation-eq-canonical-hf-equation">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eq-canonical-hf-equation" title="Permalink to this equation">#</a></span>\[
+    \hat{f} | \phi_p \rangle = \varepsilon_p | \phi_p \rangle,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{f}\)</span> is the single-particle Fock-operator.
+Note that this equation is not limited to the occupied states, but to all the molecular orbitals.
+The matrix elements of the single-particle Fock operator are given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ab8d2ae3-52c8-4f46-815a-56b2f7606cf5">
+<span class="eqno">(11)<a class="headerlink" href="#equation-ab8d2ae3-52c8-4f46-815a-56b2f7606cf5" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \langle \psi | \hat{f} | \xi \rangle
+    = \langle \psi | \hat{h} | \xi \rangle
+    + \sum_{i = 1}^{n} \langle \psi \phi_i | \hat{u} | \xi \phi_i \rangle
+    - \sum_{i = 1}^{n} \langle \psi \phi_i | \hat{u} | \phi_i \xi \rangle
+    = \langle \psi | \hat{h} | \xi \rangle
+    + \sum_{i = 1}^{n} \langle \psi \phi_i | \hat{u} | \xi \phi_i \rangle_{AS},
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(|\psi\rangle\)</span> and <span class="math notranslate nohighlight">\(|\xi \rangle\)</span> are two arbitrary single-particle states.</p>
+<section id="types-of-orbital-systems">
+<h2>Types of orbital systems<a class="headerlink" href="#types-of-orbital-systems" title="Permalink to this heading">#</a></h2>
+<p>In quantum chemistry it is common to call the initial single-particle functions for <em>atomic orbitals</em> (AO).
+We will also adhere to this convention, thus making the basis of harmonic oscillator single-particle functions the atomic orbitals of our system.
+Now, as the harmonic oscillator Hamiltonian is independent of spin we have restricted our view to the spatial part of the atomic orbitals when using quantum-systems to construct our basis elements.
+However, when moving to the full fermionic many-body picture (two = many) we have to include spin to get the full picture.
+We often talk about three kinds of orbitals depending on the restrictions put on spin.</p>
+<ol class="arabic">
+<li><p>The general spin-orbital is on the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-11b3212b-35d3-4ec6-99b2-c6242b5c26ca">
+<span class="eqno">(12)<a class="headerlink" href="#equation-11b3212b-35d3-4ec6-99b2-c6242b5c26ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+        \phi(x, m_s)
+        &amp;= \varphi_1(x) \alpha(m_s) + \varphi_2(x) \beta(m_s),
+    \end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\varphi_i(x)\)</span> are the spatial oribtals, and <span class="math notranslate nohighlight">\(\sigma \in \{\alpha, \beta\}\)</span> are spin basis functions with <span class="math notranslate nohighlight">\(m_s \in \{\uparrow, \downarrow\}\)</span> the spin quantum number.
+Typical choices for the spin basis functions are</p>
+<div class="amsmath math notranslate nohighlight" id="equation-984c5ab2-e2a9-46af-93c6-2ccb7a78ceca">
+<span class="eqno">(13)<a class="headerlink" href="#equation-984c5ab2-e2a9-46af-93c6-2ccb7a78ceca" title="Permalink to this equation">#</a></span>\[\begin{gather}
+        \alpha(\uparrow) = 1, \quad \beta(\uparrow) = 0, \\
+        \alpha(\downarrow) = 0, \quad \beta(\downarrow) = 1.
+    \end{gather}\]</div>
+</li>
+<li><p>The unrestricted spin-orbital is on the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-790a3d26-d26f-4ba3-b209-d4fceb352b02">
+<span class="eqno">(14)<a class="headerlink" href="#equation-790a3d26-d26f-4ba3-b209-d4fceb352b02" title="Permalink to this equation">#</a></span>\[\begin{align}
+        \phi(x, m_s)
+        = \varphi_{\sigma}(x) \sigma(m_s),
+    \end{align}\]</div>
+<p>where an unrestricted spin-orbital has a definite spin-direction (either <span class="math notranslate nohighlight">\(\alpha\)</span> or <span class="math notranslate nohighlight">\(\beta\)</span>), but allows for the spatial part to be different between spin-directions.</p>
+</li>
+<li><p>The restricted spin-orbital is on the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-11686cbe-c3dc-42c5-8360-32c3b675b3cb">
+<span class="eqno">(15)<a class="headerlink" href="#equation-11686cbe-c3dc-42c5-8360-32c3b675b3cb" title="Permalink to this equation">#</a></span>\[\begin{align}
+        \phi(x, m_s)
+        = \varphi(x) \sigma(m_s),
+    \end{align}\]</div>
+<p>where the spin-orbitals have a definite spin-direction with the spatial part equal between the two spin-directions.</p>
+</li>
+</ol>
+<p>We will in this project create a general Hartree-Fock (GHF) solver which implies that we use general spin-orbitals.
+This will turn out to be easiest mathematically (when deriving the equations for GHF) and the most general formulation.
+However, the restricted and unrestricted formulations are more numerically efficient.</p>
+</section>
+<section id="the-roothan-hall-equations">
+<h2>The Roothan-Hall equations<a class="headerlink" href="#the-roothan-hall-equations" title="Permalink to this heading">#</a></h2>
+<p>The way we solve the Hartree-Fock equation in <a class="reference internal" href="#equation-eq-canonical-hf-equation">(10)</a> is by expanding the Hartree-Fock orbitals <span class="math notranslate nohighlight">\(\{ \phi_p \}_{p = 1}^k\)</span> in an atomic orbital basis <span class="math notranslate nohighlight">\(\{ \psi_{\mu} \}_{\mu = 1}^{l}\)</span> (which we here take to be the orthonormal harmonic oscillator basis states with spin-doubling), and then projecting the equations onto the known basis set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In general <span class="math notranslate nohighlight">\(k \leq l\)</span> for the molecular orbitals.
+The consequence of this is that Hartree-Fock can be used as a method to truncate the basis set.
+This is common when using computationally more complex post Hartree-Fock methods such as e.g., coupled-cluster, to lower simulation times.
+However, in this project we limit our attention to <span class="math notranslate nohighlight">\(k = l\)</span>.</p>
+</div>
+<p>We express a basis transformation from the AO basis to the MO basis by</p>
+<div class="math notranslate nohighlight" id="equation-eq-basis-transformation">
+<span class="eqno">(16)<a class="headerlink" href="#equation-eq-basis-transformation" title="Permalink to this equation">#</a></span>\[
+    |\phi_p\rangle = \sum_{\mu = 1}^{l} C_{\mu p} | \psi_{\mu} \rangle,
+\]</div>
+<p>where the coefficients <span class="math notranslate nohighlight">\(C_{\mu p}\)</span> now become our primary unknowns in the Hartree-Fock method.
+Projecting the AO basis onto equation <a class="reference internal" href="#equation-eq-canonical-hf-equation">(10)</a> we have</p>
+<div class="amsmath math notranslate nohighlight" id="equation-afc7f149-818a-44dd-8725-0143ce7fddca">
+<span class="eqno">(17)<a class="headerlink" href="#equation-afc7f149-818a-44dd-8725-0143ce7fddca" title="Permalink to this equation">#</a></span>\[\begin{gather}
+    \langle \psi_{\mu} | \hat{f} | \phi_p \rangle
+    = \varepsilon_{p} \langle \psi_{\mu} | \phi_p \rangle
+    \implies
+    \sum_{\nu = 1}^{l} f_{\mu \nu} C_{\nu p}
+    = \varepsilon_{p} \sum_{\nu = 1}^{l} \delta_{\mu \nu} C_{\nu p}
+    =  C_{\mu p} \varepsilon_{p}
+    \\
+    \implies
+    \mathbf{F} \mathbf{C}
+    = \mathbf{C} \boldsymbol{\varepsilon},
+\end{gather}\]</div>
+<p>where <span class="math notranslate nohighlight">\([\mathbf{F}]_{\mu \nu} = f_{\mu \nu} = \langle \psi_{\mu} | \hat{f} | \psi_{\nu} \rangle\)</span> are the Fock matrix elements in the AO basis, <span class="math notranslate nohighlight">\([\mathbf{C}]_{\mu p} = C_{\mu p}\)</span> the basis transformation coefficient matrix, and <span class="math notranslate nohighlight">\(\boldsymbol{\varepsilon} = [\varepsilon_1, \dots, \varepsilon_k]^T\)</span> the vector of Hartree-Fock single-particle eigenenergies (not to be confused with the full many-body energy).
+The last eigenvalue equation is known as the Roothan-Hall equations.
+Here both <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\varepsilon}\)</span> are the primary unknowns.
+We now need to construct the Fock matrix in the atomic orbital basis, that is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3efb5076-bc7d-4f62-81d5-a0a825436d36">
+<span class="eqno">(18)<a class="headerlink" href="#equation-3efb5076-bc7d-4f62-81d5-a0a825436d36" title="Permalink to this equation">#</a></span>\[\begin{align}
+    f_{\mu \nu}
+    &amp;= \langle \psi_{\mu} | \hat{f} | \psi_{\nu} \rangle
+    = \langle \psi_{\mu} | \hat{h} | \psi_{\nu} \rangle
+    + \sum_{i = 1}^{n}
+    \langle \psi_{\mu} \phi_i | \hat{u} | \psi_{\nu} \phi_i \rangle_{AS}.
+\end{align}\]</div>
+<p>Replacing the sum over the occupied molecular orbitals in the two-body elements by equation <a class="reference internal" href="#equation-eq-basis-transformation">(16)</a> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e2aaedd7-78dd-40c8-87e4-23119f89c046">
+<span class="eqno">(19)<a class="headerlink" href="#equation-e2aaedd7-78dd-40c8-87e4-23119f89c046" title="Permalink to this equation">#</a></span>\[\begin{align}
+    f_{\mu \nu}
+    &amp;= \langle \psi_{\mu} | \hat{h} | \psi_{\nu} \rangle
+    + \sum_{i = 1}^{n}
+    C^{*}_{\kappa i} C_{\lambda i}
+    \langle \psi_{\mu} \psi_{\kappa} | \hat{u} | \psi_{\nu} \psi_{\lambda} \rangle_{AS}
+    = h_{\mu \nu}
+    + D_{\lambda \kappa}
+    u^{\mu \kappa}_{\nu \lambda},
+\end{align}\]</div>
+<p>where we have defined the density matrix <span class="math notranslate nohighlight">\(D_{\lambda \kappa} = \sum_{i = 1}^{n} C^{*}_{\kappa i} C_{\lambda i}\)</span>.</p>
+<p>A complicating factor with the Roothan-Hall equations is that the Fock matrix <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> depends on the coefficient matrix <span class="math notranslate nohighlight">\(\mathbf{C}\)</span>.
+To get around this we use a technique called self-consistent field iterations.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="task-1-single-particle-basis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Task 1: Single-particle basis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="task-3-expectation-values.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Task 3: Expectation values</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-orbital-systems">Types of orbital systems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-roothan-hall-equations">The Roothan-Hall equations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Øyvind Sigmundson Schøyen
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
