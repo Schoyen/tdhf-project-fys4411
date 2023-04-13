@@ -401,23 +401,29 @@ document.write(`
 <p>where we denote the time-independent one-body Hamiltonian by</p>
 <div class="math notranslate nohighlight" id="equation-eq-one-body-hamiltonian">
 <span class="eqno">(2)<a class="headerlink" href="#equation-eq-one-body-hamiltonian" title="Permalink to this equation">#</a></span>\[
-    \hat{h}(x_i) = -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d}x_i^2}
+    \hat{h}_0(x_i) = -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d}x_i^2}
     + \frac{\Omega^2}{2} \hat{x}_i^2
     \equiv \hat{t} + \hat{v}(x).
 \]</div>
 <p>Here <span class="math notranslate nohighlight">\(\hat{t}\)</span> is the kinetic energy operator, and <span class="math notranslate nohighlight">\(\hat{v}(x)\)</span> the harmonic oscillator potential energy operator.
 The two-body soft Coulomb interaction is denoted</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
+<div class="math notranslate nohighlight" id="equation-eq-two-body-hamiltonian">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-two-body-hamiltonian" title="Permalink to this equation">#</a></span>\[
     \hat{u}(x_i, x_j) = \frac{1}{\sqrt{(\hat{x}_i - \hat{x}_j)^2 + a^2}},
-\end{align*}\]</div>
+\]</div>
 <p>and the semi-classical monochromatic laser-field described by a  time-dependent, one-body, dipole interaction as</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
     \hat{h}_I(x_i, t)
     = \hat{x}_i \mathcal{E}_0 \sin(\omega t).
 \end{align*}\]</div>
-<p>As done by <span id="id4">Zanghellini <em>et al.</em> [<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> we will restrict ourselves to two-particles, i.e., <span class="math notranslate nohighlight">\(N = 2\)</span>, we use a trap frequency of <span class="math notranslate nohighlight">\(\Omega = 0.25\)</span>, and a “shielding” parameter <span class="math notranslate nohighlight">\(a = 0.25\)</span> for the Coulomb interaction. For the laser field we use a field strength of <span class="math notranslate nohighlight">\(\mathcal{E}_0 = 1\)</span> and a laser frequency of <span class="math notranslate nohighlight">\(\omega = 8 \Omega\)</span>.</p>
+<p>As done by <span id="id4">Zanghellini <em>et al.</em> [<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> we will restrict ourselves to two-particles, i.e., <span class="math notranslate nohighlight">\(N = 2\)</span>, we use a trap frequency of <span class="math notranslate nohighlight">\(\Omega = 0.25\)</span>, and a “shielding” parameter <span class="math notranslate nohighlight">\(a = 0.25\)</span> for the Coulomb interaction. For the laser field we use a field strength of <span class="math notranslate nohighlight">\(\mathcal{E}_0 = 1\)</span> and a laser frequency of <span class="math notranslate nohighlight">\(\omega = 8 \Omega\)</span>.
+We will denote the full one-body hamiltonian as <span class="math notranslate nohighlight">\(\hat{h}(x, t) = \hat{h}_0(x) + \hat{h}_I(x, t)\)</span> so that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    \hat{H}(x_1, \dots, x_N, t) = \sum_{i = 1}^{N} \hat{h}(x_i, t)
+    + \sum_{i = 1}^{N} \sum_{j = i + 1}^{N} \hat{u}(x_i, x_j).
+\end{align*}\]</div>
 </section>
 <section id="definition-of-a-one-dimensional-dvr-basis">
 <h2>Definition of a one-dimensional DVR basis<a class="headerlink" href="#definition-of-a-one-dimensional-dvr-basis" title="Permalink to this heading">#</a></h2>
@@ -535,14 +541,14 @@ The remaining terms can be evaluated using the quadrature rule. For example, the
 <p>For the two-body Coulomb interaction there are two integrals which can both be solved using the quadrature rule.
 That is (note which position in the bras and the kets are pairwise integrated),</p>
 <div class="math notranslate nohighlight" id="equation-eq-task-1-quadrature-two-body">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eq-task-1-quadrature-two-body" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-task-1-quadrature-two-body" title="Permalink to this equation">#</a></span>\[
     \langle \chi_{\alpha} \chi_{\beta} | \hat{u}(x_1, x_2) | \chi_{\gamma} \chi_{\delta} \rangle
     = \int \mathrm{d} x \mathrm{d} y \frac{\chi_{\alpha}(x) \chi_{\beta}(y) \chi_{\gamma}(x) \chi_{\delta}(y)}{\sqrt{(x - y)^2 + a^2}}
     \approx \delta_{\alpha \gamma} \delta_{\beta \delta} u(x_{\gamma}, x_{\delta}).
 \]</div>
 <div class="admonition-problem-a admonition">
 <p class="admonition-title">Problem a)</p>
-<p>Show how the quadrature rule can be used twice to get the expression in equation <a class="reference internal" href="#equation-eq-task-1-quadrature-two-body">(3)</a>.</p>
+<p>Show how the quadrature rule can be used twice to get the expression in equation <a class="reference internal" href="#equation-eq-task-1-quadrature-two-body">(4)</a>.</p>
 </div>
 <div class="admonition-problem-b admonition">
 <p class="admonition-title">Problem b)</p>
