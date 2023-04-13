@@ -374,8 +374,8 @@ document.write(`
 <section id="time-dependent-overlap">
 <h2>Time-dependent overlap<a class="headerlink" href="#time-dependent-overlap" title="Permalink to this heading">#</a></h2>
 <p>We compute the time-dependent overlap between two Slater determinants (with orthonormal atomic orbital basis functions) by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d04a4d86-da20-4943-855c-7116453eee3b">
-<span class="eqno">(20)<a class="headerlink" href="#equation-d04a4d86-da20-4943-855c-7116453eee3b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-046748ea-92b6-400c-b482-f8c7d2bcb70b">
+<span class="eqno">(21)<a class="headerlink" href="#equation-046748ea-92b6-400c-b482-f8c7d2bcb70b" title="Permalink to this equation">#</a></span>\[\begin{align}
     P(t, t_0)
     &amp;= \bigl|\langle \Phi(t) | \Phi(t_0) \rangle \bigr|^2
     = \bigl|\det\bigl(C^{\dagger}_o(t) C_o(t_0)\bigr)\bigr|^2,
@@ -391,15 +391,15 @@ document.write(`
 For example, the position operator <span class="math notranslate nohighlight">\(\hat{x}\)</span> is a one-body operator, whereas the Coulomb interaction <span class="math notranslate nohighlight">\(\hat{u}\)</span> is a two-body operator as it applies to the interaction between two particles at a time.</p>
 </div>
 <p>Having already found the matrix elements of <span class="math notranslate nohighlight">\(\hat{A}\)</span> in a static (time-independent) atomic basis <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{l}\)</span>, we can compute the expectation value of this operator by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4416566f-43b1-4fa7-aada-cb842fe189cc">
-<span class="eqno">(21)<a class="headerlink" href="#equation-4416566f-43b1-4fa7-aada-cb842fe189cc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4935df6c-1a14-4566-9ceb-5b47df12e709">
+<span class="eqno">(22)<a class="headerlink" href="#equation-4935df6c-1a14-4566-9ceb-5b47df12e709" title="Permalink to this equation">#</a></span>\[\begin{align}
     \langle A(t) \rangle
     &amp;= \langle \psi_{\mu} | \hat{A} | \psi_{\nu} \rangle D_{\nu \mu}(t),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(D_{\nu \mu}(t) = \sum_{i = 1}^{n} C^{*}_{\mu i}(t) C_{\nu i}(t)\)</span> is the time-evolved Hartree-Fock density matrix.
 Alternatively, by transforming the one-body operator to the time-evolved molecular orbital basis <span class="math notranslate nohighlight">\(\{\psi_p(t)\}_{p = 1}^{k}\)</span> we can compute the expectation value from</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9cca9c79-9932-432e-9a5a-7ba20bcdac88">
-<span class="eqno">(22)<a class="headerlink" href="#equation-9cca9c79-9932-432e-9a5a-7ba20bcdac88" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-870df938-080f-4ac7-a990-51d500988f3c">
+<span class="eqno">(23)<a class="headerlink" href="#equation-870df938-080f-4ac7-a990-51d500988f3c" title="Permalink to this equation">#</a></span>\[\begin{align}
     \langle A(t) \rangle
     &amp;=
     \langle \phi_{p}(t) | \hat{A} | \phi_q(t) \rangle
@@ -407,8 +407,8 @@ Alternatively, by transforming the one-body operator to the time-evolved molecul
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\rho_{q p}\)</span> is the one-body density matrix in the time-evolved Hartree-Fock basis.
 This matrix is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a36a8431-7271-4fd9-8382-4a1e59e50772">
-<span class="eqno">(23)<a class="headerlink" href="#equation-a36a8431-7271-4fd9-8382-4a1e59e50772" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-830485cc-9c52-413c-8842-9fe5c213f4b9">
+<span class="eqno">(24)<a class="headerlink" href="#equation-830485cc-9c52-413c-8842-9fe5c213f4b9" title="Permalink to this equation">#</a></span>\[\begin{align}
     \boldsymbol{\rho}
     &amp;= \begin{pmatrix}
         \boldsymbol{I}_{n \times n} &amp; \boldsymbol{0}_{n \times (k - n)} \\
