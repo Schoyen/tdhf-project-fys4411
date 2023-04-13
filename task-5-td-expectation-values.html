@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'task-5-td-expectation-values';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Task 4: Time-dependent general Hartree-Fock solver" href="task-4-tdrhf-solver.html" />
+    <link rel="prev" title="Task 4: Time-dependent restricted Hartree-Fock solver" href="task-4-tdrhf-solver.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -159,9 +159,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="task-1-single-particle-basis.html">Task 1: Single-particle basis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-2-rhf-solver.html">Task 2: General Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-2-rhf-solver.html">Task 2: Restricted Hartree-Fock ground state solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task-3-expectation-values.html">Task 3: Expectation values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent general Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent restricted Hartree-Fock solver</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Task 5: Time-dependent expectation values</a></li>
 </ul>
 
@@ -374,8 +374,8 @@ document.write(`
 <section id="time-dependent-overlap">
 <h2>Time-dependent overlap<a class="headerlink" href="#time-dependent-overlap" title="Permalink to this heading">#</a></h2>
 <p>We compute the time-dependent overlap between two Slater determinants (with orthonormal atomic orbital basis functions) by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c05dc11-2fbb-4cb6-8f94-753b035e223d">
-<span class="eqno">(27)<a class="headerlink" href="#equation-3c05dc11-2fbb-4cb6-8f94-753b035e223d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-042214d9-6912-449a-9a75-3107ebbc3964">
+<span class="eqno">(23)<a class="headerlink" href="#equation-042214d9-6912-449a-9a75-3107ebbc3964" title="Permalink to this equation">#</a></span>\[\begin{align}
     P(t, t_0)
     &amp;= \bigl|\langle \Phi(t) | \Phi(t_0) \rangle \bigr|^2
     = \bigl|\det\bigl(C^{\dagger}_o(t) C_o(t_0)\bigr)\bigr|^2,
@@ -391,15 +391,15 @@ document.write(`
 For example, the position operator <span class="math notranslate nohighlight">\(\hat{x}\)</span> is a one-body operator, whereas the Coulomb interaction <span class="math notranslate nohighlight">\(\hat{u}\)</span> is a two-body operator as it applies to the interaction between two particles at a time.</p>
 </div>
 <p>Having already found the matrix elements of <span class="math notranslate nohighlight">\(\hat{A}\)</span> in a static (time-independent) atomic basis <span class="math notranslate nohighlight">\(\{\psi_{\mu}\}_{\mu = 1}^{l}\)</span>, we can compute the expectation value of this operator by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cc5e9b54-d0f4-4c81-ab93-8589d5990d1a">
-<span class="eqno">(28)<a class="headerlink" href="#equation-cc5e9b54-d0f4-4c81-ab93-8589d5990d1a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ada20fa-e7b6-497e-8c11-b52a715f8362">
+<span class="eqno">(24)<a class="headerlink" href="#equation-7ada20fa-e7b6-497e-8c11-b52a715f8362" title="Permalink to this equation">#</a></span>\[\begin{align}
     \langle A(t) \rangle
     &amp;= \langle \psi_{\mu} | \hat{A} | \psi_{\nu} \rangle D_{\nu \mu}(t),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(D_{\nu \mu}(t) = \sum_{i = 1}^{n} C^{*}_{\mu i}(t) C_{\nu i}(t)\)</span> is the time-evolved Hartree-Fock density matrix.
 Alternatively, by transforming the one-body operator to the time-evolved molecular orbital basis <span class="math notranslate nohighlight">\(\{\psi_p(t)\}_{p = 1}^{k}\)</span> we can compute the expectation value from</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d18d21c-6ae6-4101-820a-b563ea1f93df">
-<span class="eqno">(29)<a class="headerlink" href="#equation-0d18d21c-6ae6-4101-820a-b563ea1f93df" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2c1de436-5351-429e-94d7-ce8bb956cc84">
+<span class="eqno">(25)<a class="headerlink" href="#equation-2c1de436-5351-429e-94d7-ce8bb956cc84" title="Permalink to this equation">#</a></span>\[\begin{align}
     \langle A(t) \rangle
     &amp;=
     \langle \phi_{p}(t) | \hat{A} | \phi_q(t) \rangle
@@ -407,8 +407,8 @@ Alternatively, by transforming the one-body operator to the time-evolved molecul
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\rho_{q p}\)</span> is the one-body density matrix in the time-evolved Hartree-Fock basis.
 This matrix is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d023642f-4212-4ae9-89b0-c18914ad845b">
-<span class="eqno">(30)<a class="headerlink" href="#equation-d023642f-4212-4ae9-89b0-c18914ad845b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3de577ce-9ca4-44a2-939d-094d3b791c1d">
+<span class="eqno">(26)<a class="headerlink" href="#equation-3de577ce-9ca4-44a2-939d-094d3b791c1d" title="Permalink to this equation">#</a></span>\[\begin{align}
     \boldsymbol{\rho}
     &amp;= \begin{pmatrix}
         \boldsymbol{I}_{n \times n} &amp; \boldsymbol{0}_{n \times (k - n)} \\
@@ -457,7 +457,7 @@ Both ways of computing the expectation value give the same value.</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Task 4: Time-dependent general Hartree-Fock solver</p>
+        <p class="prev-next-title">Task 4: Time-dependent restricted Hartree-Fock solver</p>
       </div>
     </a>
 </div></div>

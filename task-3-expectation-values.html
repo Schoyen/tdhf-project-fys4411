@@ -66,8 +66,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'task-3-expectation-values';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Task 4: Time-dependent general Hartree-Fock solver" href="task-4-tdrhf-solver.html" />
-    <link rel="prev" title="Task 2: General Hartree-Fock solver" href="task-2-rhf-solver.html" />
+    <link rel="next" title="Task 4: Time-dependent restricted Hartree-Fock solver" href="task-4-tdrhf-solver.html" />
+    <link rel="prev" title="Task 2: Restricted Hartree-Fock ground state solver" href="task-2-rhf-solver.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -160,9 +160,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="task-1-single-particle-basis.html">Task 1: Single-particle basis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-2-rhf-solver.html">Task 2: General Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-2-rhf-solver.html">Task 2: Restricted Hartree-Fock ground state solver</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Task 3: Expectation values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent general Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent restricted Hartree-Fock solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task-5-td-expectation-values.html">Task 5: Time-dependent expectation values</a></li>
 </ul>
 
@@ -357,7 +357,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-hartree-fock-energy">The general Hartree-Fock energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-restricted-hartree-fock-energy">The restricted Hartree-Fock energy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-particle-density">The particle density</a></li>
 </ul>
             </nav>
@@ -373,14 +373,14 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="task-3-expectation-values">
 <h1>Task 3: Expectation values<a class="headerlink" href="#task-3-expectation-values" title="Permalink to this heading">#</a></h1>
 <p>There are two main quantities that we wish to compute for the ground state in this project.
-They are the full many-body ground state energy <span class="math notranslate nohighlight">\(E\)</span> from the general Hartree-Fock method, and the particle density (also known as the one-body density and the electron density) <span class="math notranslate nohighlight">\(\rho(x)\)</span>.</p>
-<section id="the-general-hartree-fock-energy">
-<h2>The general Hartree-Fock energy<a class="headerlink" href="#the-general-hartree-fock-energy" title="Permalink to this heading">#</a></h2>
-<p>We wish to compute the ground state energy from the Hartree-Fock ansatz, <span class="math notranslate nohighlight">\(| \Psi \rangle = |\phi_1\dots\phi_n\rangle\)</span>.
+They are the full many-body ground state energy <span class="math notranslate nohighlight">\(E\)</span> from the restricted Hartree-Fock method, and the particle density (also known as the one-body density or the electron density) <span class="math notranslate nohighlight">\(\rho(x)\)</span>.</p>
+<section id="the-restricted-hartree-fock-energy">
+<h2>The restricted Hartree-Fock energy<a class="headerlink" href="#the-restricted-hartree-fock-energy" title="Permalink to this heading">#</a></h2>
+<p>We wish to compute the ground state energy from the Hartree-Fock ansatz, <span class="math notranslate nohighlight">\(| \Phi \rangle = |\phi_1\dots\phi_N\rangle\)</span>.
 This is done by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4abfca6e-dd31-4647-9666-46636c2c487b">
-<span class="eqno">(20)<a class="headerlink" href="#equation-4abfca6e-dd31-4647-9666-46636c2c487b" title="Permalink to this equation">#</a></span>\[\begin{align}
-    E &amp;= \langle \Psi | \hat{H} | \Psi \rangle
+<div class="amsmath math notranslate nohighlight" id="equation-cb1689a2-3785-450c-a147-ada0e4dc7e64">
+<span class="eqno">(16)<a class="headerlink" href="#equation-cb1689a2-3785-450c-a147-ada0e4dc7e64" title="Permalink to this equation">#</a></span>\[\begin{align}
+    E &amp;= \langle \Phi | \hat{H} | \Phi \rangle
     = \sum_{i = 1}^{n} \langle \phi_i | \hat{h} | \phi_i \rangle
     + \frac{1}{2} \sum_{i, j = 1}^{n}
     \langle \phi_i \phi_j | \hat{u} | \phi_i \phi_j \rangle_{AS},
@@ -393,8 +393,8 @@ Inserting the basis expansion the energy can be found as a function of the coeff
 <p>The particle density can be computed from the single-particle functions evaluated on a grid, and the one-body density matrix.
 We have already found the one-body density matrix when constructing the Fock matrix, it is given by <span class="math notranslate nohighlight">\(D_{\nu \mu} = \sum_{i = 1}^{n} C^{*}_{\mu i} C_{\nu i}\)</span>.
 We can then compute the particle density from</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f0c57609-4896-4836-8081-d8b8299d0ee9">
-<span class="eqno">(21)<a class="headerlink" href="#equation-f0c57609-4896-4836-8081-d8b8299d0ee9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b0146e88-978f-43f9-a738-07df5b26330a">
+<span class="eqno">(17)<a class="headerlink" href="#equation-b0146e88-978f-43f9-a738-07df5b26330a" title="Permalink to this equation">#</a></span>\[\begin{align}
     \rho(x) = \sum_{\mu, \nu = 1}^{l} \psi^{*}_{\mu}(x) D_{\nu \mu} \psi_{\nu}(x)
 \end{align}\]</div>
 </section>
@@ -437,7 +437,7 @@ We can then compute the particle density from</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Task 2: General Hartree-Fock solver</p>
+        <p class="prev-next-title">Task 2: Restricted Hartree-Fock ground state solver</p>
       </div>
     </a>
     <a class="right-next"
@@ -445,7 +445,7 @@ We can then compute the particle density from</p>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Task 4: Time-dependent general Hartree-Fock solver</p>
+        <p class="prev-next-title">Task 4: Time-dependent restricted Hartree-Fock solver</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -467,7 +467,7 @@ We can then compute the particle density from</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-general-hartree-fock-energy">The general Hartree-Fock energy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-restricted-hartree-fock-energy">The restricted Hartree-Fock energy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-particle-density">The particle density</a></li>
 </ul>
   </nav></div>

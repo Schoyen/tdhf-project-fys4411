@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Task 2: General Hartree-Fock solver &#8212; FYS4411 - Project 2 TDHF</title>
+    <title>Task 2: Restricted Hartree-Fock ground state solver &#8212; FYS4411 - Project 2 TDHF</title>
   
   
   
@@ -160,9 +160,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="task-1-single-particle-basis.html">Task 1: Single-particle basis</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Task 2: General Hartree-Fock solver</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Task 2: Restricted Hartree-Fock ground state solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task-3-expectation-values.html">Task 3: Expectation values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent general Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent restricted Hartree-Fock solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task-5-td-expectation-values.html">Task 5: Time-dependent expectation values</a></li>
 </ul>
 
@@ -347,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Task 2: General Hartree-Fock solver</h1>
+    <h1>Task 2: Restricted Hartree-Fock ground state solver</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,77 +370,64 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="task-2-general-hartree-fock-solver">
-<h1>Task 2: General Hartree-Fock solver<a class="headerlink" href="#task-2-general-hartree-fock-solver" title="Permalink to this heading">#</a></h1>
-<p>Having set up an initial single-particle basis set <span class="math notranslate nohighlight">\(\{\chi_{\alpha}\}_{\alpha = 1}^{l}\)</span> we now set out to find the ground state of the two-body fermion problem.
-The full time-independent Hamiltonian used by <span id="id1">[<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f16346b6-5499-4e9d-a17a-e5c06cdbf035">
-<span class="eqno">(4)<a class="headerlink" href="#equation-f16346b6-5499-4e9d-a17a-e5c06cdbf035" title="Permalink to this equation">#</a></span>\[\begin{align}
-    \hat{H}
-    = \hat{h} + \hat{u}
-    = \sum_{i = 1}^{n}\left(
-        -\frac{1}{2}\frac{\text{d}^2}{\text{d}x^2}
-        + \frac{1}{2}\omega^2 x^2
-    \right)
-    + \sum_{i = 1}^{n} \sum_{j = i + 1}^{n} \frac{\alpha}{\sqrt{(x_i - x_j)^2 + a^2}},
-\end{align}\]</div>
-<p>where the number of particles <span class="math notranslate nohighlight">\(n = 2\)</span>, <span class="math notranslate nohighlight">\(a = 0.25\)</span>, <span class="math notranslate nohighlight">\(\alpha = 1\)</span> (not to be confused with the index <span class="math notranslate nohighlight">\(\alpha\)</span> in the basis of harmonic oscillator eigenstates), and <span class="math notranslate nohighlight">\(\omega = 0.25\)</span>.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="task-2-restricted-hartree-fock-ground-state-solver">
+<h1>Task 2: Restricted Hartree-Fock ground state solver<a class="headerlink" href="#task-2-restricted-hartree-fock-ground-state-solver" title="Permalink to this heading">#</a></h1>
 <p>We start from the time-independent Schrödinger equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8929e765-b441-4187-b8c4-1a7952ead88b">
-<span class="eqno">(5)<a class="headerlink" href="#equation-8929e765-b441-4187-b8c4-1a7952ead88b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
     \hat{H} | \Psi \rangle = E | \Psi \rangle,
-\end{align}\]</div>
-<p>where <span class="math notranslate nohighlight">\(| \Psi \rangle\)</span> is a many-body wave function.
-We know that in the non-interacting case the exact ground state of the Hamiltonian will be a single Slater determinant (which we denote <span class="math notranslate nohighlight">\(| \Phi \rangle\)</span>) of the lowest single-particle eigenstates.
+\end{align*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(| \Psi \rangle\)</span> is a many-body wave function of <span class="math notranslate nohighlight">\(N\)</span> particles.
+We know that in the non-interacting case the exact ground state of the Hamiltonian will be a single Slater determinant (which we denote <span class="math notranslate nohighlight">\(| \Phi \rangle\)</span>) of the <span class="math notranslate nohighlight">\(N\)</span> lowest single-particle eigenstates.
 This motivates the ansatz of using a single Slater determinant for the full many-body problem</p>
-<div class="amsmath math notranslate nohighlight" id="equation-533407ab-00c5-459c-bb05-555cbae37866">
-<span class="eqno">(6)<a class="headerlink" href="#equation-533407ab-00c5-459c-bb05-555cbae37866" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
     | \Psi \rangle \approx | \Phi \rangle
-    = | \phi_1 \phi_2 \dots \phi_n \rangle,
-\end{align}\]</div>
-<p>where the <span class="math notranslate nohighlight">\(n\)</span> lowest <em>molecular orbitals</em> (MO) (also known as the Hartree-Fock orbitals) from <span class="math notranslate nohighlight">\(\{\phi_p\}_{p = 1}^{k}\)</span> (<span class="math notranslate nohighlight">\(k \leq n\)</span>) are the primary unknowns.</p>
+    = | \phi_1 \phi_2 \dots \phi_N \rangle,
+\end{align*}\]</div>
+<p>where the <span class="math notranslate nohighlight">\(N\)</span> lowest <em>molecular orbitals</em> (MO) (also known as the Hartree-Fock orbitals) from <span class="math notranslate nohighlight">\(\{\phi_p\}_{p = 1}^{L}\)</span> (<span class="math notranslate nohighlight">\(N \leq L\)</span>) are the primary unknowns.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We use a convention where split up the set of molecular orbitals into a set of <em>occupied</em> and <em>virtual</em> orbitals.
 That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4306e86a-4252-47d0-95ae-9815ac47abf7">
-<span class="eqno">(7)<a class="headerlink" href="#equation-4306e86a-4252-47d0-95ae-9815ac47abf7" title="Permalink to this equation">#</a></span>\[\begin{align}
-    \{ \phi_p \}_{p = 1}^{k}
-    = \{ \phi_i \}_{i = 1}^{n} \cup \{ \phi_a \}_{a = n + 1}^{k},
-\end{align}\]</div>
-<p>where we let the indices <span class="math notranslate nohighlight">\(i, j, k, l, \dots \in \{1, \dots, n\}\)</span> denote the occupied orbitals, i.e., the orbitals that are contained in the Hartree-Fock Slater determinant, <span class="math notranslate nohighlight">\(a, b, c, d, \dots \in \{n + 1, \dots, k \}\)</span> are the indices of the virtual orbitals that are not contained in the reference determinant, and <span class="math notranslate nohighlight">\(p, q, r, s, \dots \in \{1, \dots, k\}\)</span> the full set of orbitals.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    \{ \phi_p \}_{p = 1}^{L}
+    = \{ \phi_i \}_{i = 1}^{N} \cup \{ \phi_a \}_{a = N + 1}^{L},
+\end{align*}\]</div>
+<p>where we let the indices <span class="math notranslate nohighlight">\(i, j, k, l, \dots \in \{1, \dots, N\}\)</span> denote the occupied orbitals, i.e., the orbitals that are contained in the Hartree-Fock Slater determinant, <span class="math notranslate nohighlight">\(a, b, c, d, \dots \in \{N + 1, \dots, L \}\)</span> are the indices of the virtual orbitals that are not contained in the reference determinant, and <span class="math notranslate nohighlight">\(p, q, r, s, \dots \in \{1, \dots, L\}\)</span> the full set of orbitals.</p>
 </div>
 <p>The Hartree-Fock method method finds the Slater determinant that minimizes the energy, i.e., gets closest to the “true” many-body ground state energy <span class="math notranslate nohighlight">\(E_{gs}\)</span> of the problem using the variational principle</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4e9b1021-4198-4692-8352-27f7d2409561">
-<span class="eqno">(8)<a class="headerlink" href="#equation-4e9b1021-4198-4692-8352-27f7d2409561" title="Permalink to this equation">#</a></span>\[\begin{align}
-    E_{gs} \leq E[\Phi, \Phi^{*}] = E[\phi_1, \dots, \phi_n] = \langle \Phi | \hat{H} | \Phi \rangle,
+<div class="amsmath math notranslate nohighlight" id="equation-09cf3e93-58c1-4005-afa1-04bd0150ed7a">
+<span class="eqno">(4)<a class="headerlink" href="#equation-09cf3e93-58c1-4005-afa1-04bd0150ed7a" title="Permalink to this equation">#</a></span>\[\begin{align}
+    E_{gs} \leq E[\Phi, \Phi^{*}] = E[\phi_1, \dots, \phi_N] = \langle \Phi | \hat{H} | \Phi \rangle,
 \end{align}\]</div>
-<p>subject to the constraint that the molecular orbitals are orthonormal, <span class="math notranslate nohighlight">\(\langle \phi_i | \phi_j \rangle = \delta_{ij}\)</span> (<span class="math notranslate nohighlight">\(\implies \langle \Phi | \Phi \rangle = 1\)</span>).
+<p>subject to the constraint that the molecular orbitals are orthonormal, <span class="math notranslate nohighlight">\(\langle \phi_i | \phi_j \rangle = \delta_{ij}\)</span>. This in turn implies that the Slater determinant is normalized, i.e., <span class="math notranslate nohighlight">\(\langle \Phi | \Phi \rangle = 1\)</span>.
 To include this requirement in the variational principle we use Lagrange’s method of undetermined multipliers</p>
 <div class="math notranslate nohighlight" id="equation-eq-hf-lagrangian">
-<span class="eqno">(9)<a class="headerlink" href="#equation-eq-hf-lagrangian" title="Permalink to this equation">#</a></span>\[
-    L[\phi_1, \dots, \phi_n, \boldsymbol{\lambda}]
-    = E[\phi_1, \dots, \phi_n]
-    - \lambda_{qp} \left(
-        \langle \phi_p | \phi_q \rangle
-        - \delta_{pq}
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-hf-lagrangian" title="Permalink to this equation">#</a></span>\[
+    L[\phi_1, \dots, \phi_N, \lambda]
+    = E[\phi_1, \dots, \phi_N]
+    - \sum_{i = 1}^{N} \sum_{j = 1}^{N} \lambda_{ji} \left(
+        \langle \phi_i | \phi_j \rangle
+        - \delta_{ij}
     \right),
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span> are the Lagrange multipliers.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Add derivation of the (canonical) GHF-equations.</p>
+<p>where <span class="math notranslate nohighlight">\(\lambda_{ji}\)</span> are the Lagrange multipliers, one for each constraint. We require the Lagrangian, <span class="math notranslate nohighlight">\(L\)</span>, to be real. As the constraints we use in general are hermitian, we require that that the Lagrange multipliers be hermitian as well, that is, <span class="math notranslate nohighlight">\(\lambda_{ji} = \lambda^{*}_{ij}\)</span>.</p>
+<div class="admonition-problem-a admonition">
+<p class="admonition-title">Problem a)</p>
+<p>Add derivation of the (canonical) RHF-equations.</p>
 </div>
-<p>Minimization of the Lagrangian in <a class="reference internal" href="#equation-eq-hf-lagrangian">(9)</a> yields the Hartree-Fock eigenvalue equation</p>
+<p>Minimization of the Lagrangian in equation <a class="reference internal" href="#equation-eq-hf-lagrangian">(5)</a> yields the Hartree-Fock eigenvalue equation</p>
 <div class="math notranslate nohighlight" id="equation-eq-canonical-hf-equation">
-<span class="eqno">(10)<a class="headerlink" href="#equation-eq-canonical-hf-equation" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-canonical-hf-equation" title="Permalink to this equation">#</a></span>\[
     \hat{f} | \phi_p \rangle = \varepsilon_p | \phi_p \rangle,
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{f}\)</span> is the single-particle Fock-operator.
 Note that this equation is not limited to the occupied states, but to all the molecular orbitals.
 The matrix elements of the single-particle Fock operator are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ab8d2ae3-52c8-4f46-815a-56b2f7606cf5">
-<span class="eqno">(11)<a class="headerlink" href="#equation-ab8d2ae3-52c8-4f46-815a-56b2f7606cf5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ec46ae0d-ce51-4bc8-9bea-6c61882ce350">
+<span class="eqno">(7)<a class="headerlink" href="#equation-ec46ae0d-ce51-4bc8-9bea-6c61882ce350" title="Permalink to this equation">#</a></span>\[\begin{align}
     \langle \psi | \hat{f} | \xi \rangle
     = \langle \psi | \hat{h} | \xi \rangle
     + \sum_{i = 1}^{n} \langle \psi \phi_i | \hat{u} | \xi \phi_i \rangle
@@ -458,30 +445,30 @@ However, when moving to the full fermionic many-body picture (two = many) we hav
 We often talk about three kinds of orbitals depending on the restrictions put on spin.</p>
 <ol class="arabic">
 <li><p>The general spin-orbital is on the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11b3212b-35d3-4ec6-99b2-c6242b5c26ca">
-<span class="eqno">(12)<a class="headerlink" href="#equation-11b3212b-35d3-4ec6-99b2-c6242b5c26ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4ab7617b-b1c8-4b53-b94e-200fe0b084c5">
+<span class="eqno">(8)<a class="headerlink" href="#equation-4ab7617b-b1c8-4b53-b94e-200fe0b084c5" title="Permalink to this equation">#</a></span>\[\begin{align}
         \phi(x, m_s)
         &amp;= \varphi_1(x) \alpha(m_s) + \varphi_2(x) \beta(m_s),
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\varphi_i(x)\)</span> are the spatial oribtals, and <span class="math notranslate nohighlight">\(\sigma \in \{\alpha, \beta\}\)</span> are spin basis functions with <span class="math notranslate nohighlight">\(m_s \in \{\uparrow, \downarrow\}\)</span> the spin quantum number.
 Typical choices for the spin basis functions are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-984c5ab2-e2a9-46af-93c6-2ccb7a78ceca">
-<span class="eqno">(13)<a class="headerlink" href="#equation-984c5ab2-e2a9-46af-93c6-2ccb7a78ceca" title="Permalink to this equation">#</a></span>\[\begin{gather}
+<div class="amsmath math notranslate nohighlight" id="equation-282d37b5-d0bc-4dda-a94d-d7f01adde6f7">
+<span class="eqno">(9)<a class="headerlink" href="#equation-282d37b5-d0bc-4dda-a94d-d7f01adde6f7" title="Permalink to this equation">#</a></span>\[\begin{gather}
         \alpha(\uparrow) = 1, \quad \beta(\uparrow) = 0, \\
         \alpha(\downarrow) = 0, \quad \beta(\downarrow) = 1.
     \end{gather}\]</div>
 </li>
 <li><p>The unrestricted spin-orbital is on the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-790a3d26-d26f-4ba3-b209-d4fceb352b02">
-<span class="eqno">(14)<a class="headerlink" href="#equation-790a3d26-d26f-4ba3-b209-d4fceb352b02" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-149a9a2e-d9e6-498e-8dd2-6cae7047c74e">
+<span class="eqno">(10)<a class="headerlink" href="#equation-149a9a2e-d9e6-498e-8dd2-6cae7047c74e" title="Permalink to this equation">#</a></span>\[\begin{align}
         \phi(x, m_s)
         = \varphi_{\sigma}(x) \sigma(m_s),
     \end{align}\]</div>
 <p>where an unrestricted spin-orbital has a definite spin-direction (either <span class="math notranslate nohighlight">\(\alpha\)</span> or <span class="math notranslate nohighlight">\(\beta\)</span>), but allows for the spatial part to be different between spin-directions.</p>
 </li>
 <li><p>The restricted spin-orbital is on the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11686cbe-c3dc-42c5-8360-32c3b675b3cb">
-<span class="eqno">(15)<a class="headerlink" href="#equation-11686cbe-c3dc-42c5-8360-32c3b675b3cb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6576488d-542e-4c18-a220-80e0400c1736">
+<span class="eqno">(11)<a class="headerlink" href="#equation-6576488d-542e-4c18-a220-80e0400c1736" title="Permalink to this equation">#</a></span>\[\begin{align}
         \phi(x, m_s)
         = \varphi(x) \sigma(m_s),
     \end{align}\]</div>
@@ -494,7 +481,7 @@ However, the restricted and unrestricted formulations are more numerically effic
 </section>
 <section id="the-roothan-hall-equations">
 <h2>The Roothan-Hall equations<a class="headerlink" href="#the-roothan-hall-equations" title="Permalink to this heading">#</a></h2>
-<p>The way we solve the Hartree-Fock equation in <a class="reference internal" href="#equation-eq-canonical-hf-equation">(10)</a> is by expanding the Hartree-Fock orbitals <span class="math notranslate nohighlight">\(\{ \phi_p \}_{p = 1}^k\)</span> in an atomic orbital basis <span class="math notranslate nohighlight">\(\{ \psi_{\mu} \}_{\mu = 1}^{l}\)</span> (which we here take to be the orthonormal harmonic oscillator basis states with spin-doubling), and then projecting the equations onto the known basis set.</p>
+<p>The way we solve the Hartree-Fock equation in <a class="reference internal" href="#equation-eq-canonical-hf-equation">(6)</a> is by expanding the Hartree-Fock orbitals <span class="math notranslate nohighlight">\(\{ \phi_p \}_{p = 1}^k\)</span> in an atomic orbital basis <span class="math notranslate nohighlight">\(\{ \psi_{\mu} \}_{\mu = 1}^{l}\)</span> (which we here take to be the orthonormal harmonic oscillator basis states with spin-doubling), and then projecting the equations onto the known basis set.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>In general <span class="math notranslate nohighlight">\(k \leq l\)</span> for the molecular orbitals.
@@ -504,13 +491,13 @@ However, in this project we limit our attention to <span class="math notranslate
 </div>
 <p>We express a basis transformation from the AO basis to the MO basis by</p>
 <div class="math notranslate nohighlight" id="equation-eq-basis-transformation">
-<span class="eqno">(16)<a class="headerlink" href="#equation-eq-basis-transformation" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(12)<a class="headerlink" href="#equation-eq-basis-transformation" title="Permalink to this equation">#</a></span>\[
     |\phi_p\rangle = \sum_{\mu = 1}^{l} C_{\mu p} | \psi_{\mu} \rangle,
 \]</div>
 <p>where the coefficients <span class="math notranslate nohighlight">\(C_{\mu p}\)</span> now become our primary unknowns in the Hartree-Fock method.
-Projecting the AO basis onto equation <a class="reference internal" href="#equation-eq-canonical-hf-equation">(10)</a> we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-afc7f149-818a-44dd-8725-0143ce7fddca">
-<span class="eqno">(17)<a class="headerlink" href="#equation-afc7f149-818a-44dd-8725-0143ce7fddca" title="Permalink to this equation">#</a></span>\[\begin{gather}
+Projecting the AO basis onto equation <a class="reference internal" href="#equation-eq-canonical-hf-equation">(6)</a> we have</p>
+<div class="amsmath math notranslate nohighlight" id="equation-656481a5-65d7-44fa-878b-ebbf792b9fbb">
+<span class="eqno">(13)<a class="headerlink" href="#equation-656481a5-65d7-44fa-878b-ebbf792b9fbb" title="Permalink to this equation">#</a></span>\[\begin{gather}
     \langle \psi_{\mu} | \hat{f} | \phi_p \rangle
     = \varepsilon_{p} \langle \psi_{\mu} | \phi_p \rangle
     \implies
@@ -526,17 +513,17 @@ Projecting the AO basis onto equation <a class="reference internal" href="#equat
 The last eigenvalue equation is known as the Roothan-Hall equations.
 Here both <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\varepsilon}\)</span> are the primary unknowns.
 We now need to construct the Fock matrix in the atomic orbital basis, that is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3efb5076-bc7d-4f62-81d5-a0a825436d36">
-<span class="eqno">(18)<a class="headerlink" href="#equation-3efb5076-bc7d-4f62-81d5-a0a825436d36" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-12b75857-06a2-4737-976f-e035e52a6144">
+<span class="eqno">(14)<a class="headerlink" href="#equation-12b75857-06a2-4737-976f-e035e52a6144" title="Permalink to this equation">#</a></span>\[\begin{align}
     f_{\mu \nu}
     &amp;= \langle \psi_{\mu} | \hat{f} | \psi_{\nu} \rangle
     = \langle \psi_{\mu} | \hat{h} | \psi_{\nu} \rangle
     + \sum_{i = 1}^{n}
     \langle \psi_{\mu} \phi_i | \hat{u} | \psi_{\nu} \phi_i \rangle_{AS}.
 \end{align}\]</div>
-<p>Replacing the sum over the occupied molecular orbitals in the two-body elements by equation <a class="reference internal" href="#equation-eq-basis-transformation">(16)</a> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2aaedd7-78dd-40c8-87e4-23119f89c046">
-<span class="eqno">(19)<a class="headerlink" href="#equation-e2aaedd7-78dd-40c8-87e4-23119f89c046" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p>Replacing the sum over the occupied molecular orbitals in the two-body elements by equation <a class="reference internal" href="#equation-eq-basis-transformation">(12)</a> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0e40b8ef-b572-4c90-8a2c-d80a22c1fa2b">
+<span class="eqno">(15)<a class="headerlink" href="#equation-0e40b8ef-b572-4c90-8a2c-d80a22c1fa2b" title="Permalink to this equation">#</a></span>\[\begin{align}
     f_{\mu \nu}
     &amp;= \langle \psi_{\mu} | \hat{h} | \psi_{\nu} \rangle
     + \sum_{i = 1}^{n}

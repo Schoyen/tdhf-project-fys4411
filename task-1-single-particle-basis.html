@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'task-1-single-particle-basis';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Task 2: General Hartree-Fock solver" href="task-2-rhf-solver.html" />
+    <link rel="next" title="Task 2: Restricted Hartree-Fock ground state solver" href="task-2-rhf-solver.html" />
     <link rel="prev" title="Time-dependent Hartree-Fock theory" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -160,9 +160,9 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Task 1: Single-particle basis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-2-rhf-solver.html">Task 2: General Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-2-rhf-solver.html">Task 2: Restricted Hartree-Fock ground state solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task-3-expectation-values.html">Task 3: Expectation values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent general Hartree-Fock solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="task-4-tdrhf-solver.html">Task 4: Time-dependent restricted Hartree-Fock solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="task-5-td-expectation-values.html">Task 5: Time-dependent expectation values</a></li>
 </ul>
 
@@ -376,7 +376,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="task-1-single-particle-basis">
 <h1>Task 1: Single-particle basis<a class="headerlink" href="#task-1-single-particle-basis" title="Permalink to this heading">#</a></h1>
-<p>We will here discuss how to set up the single-particle basis for the Hamiltonian used by <span id="id1">[<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span>. We will use a one-dimensional discrete-variable representation (DVR) for our single-particle states. Specifically we will use the sinc-DVR basis by <span id="id2">[<a class="reference internal" href="intro.html#id6" title="Daniel T. Colbert and William H. Miller. A novel discrete variable representation for quantum mechanical reactive scattering via the s‐matrix kohn method. The Journal of Chemical Physics, 96(3):1982-1991, 1992. doi:10.1063/1.462100.">CM92</a>]</span>.</p>
+<p>We will here discuss how to set up the single-particle basis for the Hamiltonian used by <span id="id1">Zanghellini <em>et al.</em> [<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span>. We will use a one-dimensional discrete-variable representation (DVR) for our single-particle states. Specifically we will use the sinc-DVR basis by <span id="id2">Colbert and Miller [<a class="reference internal" href="intro.html#id6" title="Daniel T. Colbert and William H. Miller. A novel discrete variable representation for quantum mechanical reactive scattering via the s‐matrix kohn method. The Journal of Chemical Physics, 96(3):1982-1991, 1992. doi:10.1063/1.462100.">CM92</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -387,49 +387,51 @@ document.write(`
 </div>
 <section id="hamiltonian">
 <h2>Hamiltonian<a class="headerlink" href="#hamiltonian" title="Permalink to this heading">#</a></h2>
-<p>The Hamiltonian used by <span id="id3">[<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> is</p>
+<p>The Hamiltonian used by <span id="id3">Zanghellini <em>et al.</em> [<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> is</p>
 <div class="math notranslate nohighlight" id="equation-eq-hamiltonian">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-hamiltonian" title="Permalink to this equation">#</a></span>\[
-    H(x_1, \dots, x_n, t) = \sum_{i = 1}^{n} \left(
+    \hat{H}(x_1, \dots, x_N, t) = \sum_{i = 1}^{N} \left(
         -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d}x_i^2}
-        + \frac{\Omega^2}{2} x_i^2
-        + x_i \mathcal{E}_0 \sin(\omega t)
+        + \frac{\Omega^2}{2} \hat{x}_i^2
+        + \hat{x}_i \mathcal{E}_0 \sin(\omega t)
     \right)
-    + \sum_{i = 1}^{n} \sum_{j = i + 1}^{n}
-    \frac{1}{\sqrt{(x_i - x_j)^2 + a^2}},
+    + \sum_{i = 1}^{N} \sum_{j = i + 1}^{N}
+    \frac{1}{\sqrt{(\hat{x}_i - \hat{x}_j)^2 + a^2}},
 \]</div>
 <p>where we denote the time-independent one-body Hamiltonian by</p>
 <div class="math notranslate nohighlight" id="equation-eq-one-body-hamiltonian">
 <span class="eqno">(2)<a class="headerlink" href="#equation-eq-one-body-hamiltonian" title="Permalink to this equation">#</a></span>\[
-    h(x_i) = -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d}x_i^2}
-    + \frac{\Omega^2}{2} x_i^2,
+    \hat{h}(x_i) = -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d}x_i^2}
+    + \frac{\Omega^2}{2} \hat{x}_i^2
+    \equiv \hat{t} + \hat{v}(x).
 \]</div>
-<p>the two-body soft Coulomb interaction by</p>
+<p>Here <span class="math notranslate nohighlight">\(\hat{t}\)</span> is the kinetic energy operator, and <span class="math notranslate nohighlight">\(\hat{v}(x)\)</span> the harmonic oscillator potential energy operator.
+The two-body soft Coulomb interaction is denoted</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    u(x_i, x_j) = \frac{1}{\sqrt{(x_i - x_j)^2 + a^2}},
+    \hat{u}(x_i, x_j) = \frac{1}{\sqrt{(\hat{x}_i - \hat{x}_j)^2 + a^2}},
 \end{align*}\]</div>
 <p>and the semi-classical monochromatic laser-field described by a  time-dependent, one-body, dipole interaction as</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    h_I(x_i, t)
-    = x_i \mathcal{E}_0 \sin(\omega t).
+    \hat{h}_I(x_i, t)
+    = \hat{x}_i \mathcal{E}_0 \sin(\omega t).
 \end{align*}\]</div>
-<p>As done by <span id="id4">[<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> we will restrict ourselves to two-particles, i.e., <span class="math notranslate nohighlight">\(n = 2\)</span>, we use a trap frequency of <span class="math notranslate nohighlight">\(\Omega = 0.25\)</span>, and a “shielding” parameter <span class="math notranslate nohighlight">\(a = 0.25\)</span> for the Coulomb interaction. For the laser field we use a field strength of <span class="math notranslate nohighlight">\(\mathcal{E}_0 = 1\)</span> and a laser frequency of <span class="math notranslate nohighlight">\(\omega = 8 \Omega\)</span>.</p>
+<p>As done by <span id="id4">Zanghellini <em>et al.</em> [<a class="reference internal" href="intro.html#id3" title="J. Zanghellini, M. Kitzler, T. Brabec, and A. Scrinzi. Testing the multi-configuration time-dependent hartree–fock method. Journal of Physics B: Atomic, Molecular and Optical Physics, 37:763, 2004. doi:10.1088/0953-4075/37/4/004.">ZKBS04</a>]</span> we will restrict ourselves to two-particles, i.e., <span class="math notranslate nohighlight">\(N = 2\)</span>, we use a trap frequency of <span class="math notranslate nohighlight">\(\Omega = 0.25\)</span>, and a “shielding” parameter <span class="math notranslate nohighlight">\(a = 0.25\)</span> for the Coulomb interaction. For the laser field we use a field strength of <span class="math notranslate nohighlight">\(\mathcal{E}_0 = 1\)</span> and a laser frequency of <span class="math notranslate nohighlight">\(\omega = 8 \Omega\)</span>.</p>
 </section>
 <section id="definition-of-a-one-dimensional-dvr-basis">
 <h2>Definition of a one-dimensional DVR basis<a class="headerlink" href="#definition-of-a-one-dimensional-dvr-basis" title="Permalink to this heading">#</a></h2>
-<p>According to <span id="id5">[<a class="reference internal" href="intro.html#id7" title="Gerrit C. Groenenboom and Daniel T. Colbert. Combining the discrete variable representation with the s‐matrix kohn method for quantum reactive scattering. The Journal of Chemical Physics, 99(12):9681, 1993. doi:10.1063/1.465450.">GC93</a>]</span> a definition of a one-dimensional DVR consists of four components.
+<p>According to <span id="id5">Groenenboom and Colbert [<a class="reference internal" href="intro.html#id7" title="Gerrit C. Groenenboom and Daniel T. Colbert. Combining the discrete variable representation with the s‐matrix kohn method for quantum reactive scattering. The Journal of Chemical Physics, 99(12):9681, 1993. doi:10.1063/1.465450.">GC93</a>]</span> a definition of a one-dimensional DVR consists of four components.
 They are:</p>
 <ol class="arabic simple">
-<li><p>An orthonormal basis set <span class="math notranslate nohighlight">\(B = \{\chi_i(x) \mid i = 1, \dots, K\}\)</span>, where <span class="math notranslate nohighlight">\(\chi(x)\)</span> are real.</p></li>
-<li><p>An <span class="math notranslate nohighlight">\(N\)</span>-point quadrature with the <em>points</em> and <em>weights</em> <span class="math notranslate nohighlight">\(Q = \{(x_i, w_i) \mid i = 1, \dots K\}\)</span>.</p></li>
-<li><p>The property <span class="math notranslate nohighlight">\(\chi_i(x_k) = w_k^{-1/2} \delta_{ik}\)</span> where <span class="math notranslate nohighlight">\((x_k, w_k) \in Q\)</span> and <span class="math notranslate nohighlight">\(\chi_i(x) \in B\)</span>.</p></li>
+<li><p>An orthonormal basis set <span class="math notranslate nohighlight">\(B = \{\chi_{\alpha}(x) \mid \alpha = 1, \dots, K\}\)</span>, where <span class="math notranslate nohighlight">\(\chi_{\alpha}(x)\)</span> are real.</p></li>
+<li><p>An <span class="math notranslate nohighlight">\(N\)</span>-point quadrature with the <em>points</em> and <em>weights</em> <span class="math notranslate nohighlight">\(Q = \{(x_{\alpha}, w_{\alpha}) \mid \alpha = 1, \dots K\}\)</span>.</p></li>
+<li><p>The property <span class="math notranslate nohighlight">\(\chi_{\alpha}(x_{\beta}) = w_{\beta}^{-1/2} \delta_{\alpha \beta}\)</span> where <span class="math notranslate nohighlight">\((x_{\beta}, w_{\beta}) \in Q\)</span> and <span class="math notranslate nohighlight">\(\chi_{\alpha}(x) \in B\)</span>.</p></li>
 <li><p>The rule that the matrix elements of all multiplicative operators (all <span class="math notranslate nohighlight">\(\hat{x}\)</span>-dependent operators) are computed within the quadrature approximation.</p></li>
 </ol>
-<p>The authors dub <span class="math notranslate nohighlight">\(\chi_i\)</span> the DVR functions.
-Note that even though <span class="math notranslate nohighlight">\(\chi_i(x_k) = w_k^{-1/2} \delta_{ik}\)</span> when <span class="math notranslate nohighlight">\((x_k,
-w_k) \in Q\)</span>, <span class="math notranslate nohighlight">\(\chi_i(x)\)</span>  is not necessarily zero for all values of <span class="math notranslate nohighlight">\(x\)</span>.
+<p><span id="id6">Groenenboom and Colbert [<a class="reference internal" href="intro.html#id7" title="Gerrit C. Groenenboom and Daniel T. Colbert. Combining the discrete variable representation with the s‐matrix kohn method for quantum reactive scattering. The Journal of Chemical Physics, 99(12):9681, 1993. doi:10.1063/1.465450.">GC93</a>]</span> dub <span class="math notranslate nohighlight">\(\chi_{\alpha}(x)\)</span> the DVR functions.
+Note that even though <span class="math notranslate nohighlight">\(\chi_{\alpha}(x_{\beta}) = w_{\beta}^{-1/2} \delta_{\alpha \beta}\)</span> when <span class="math notranslate nohighlight">\((x_{\beta},
+w_{\beta}) \in Q\)</span>, <span class="math notranslate nohighlight">\(\chi_{\alpha}(x)\)</span>  is not necessarily zero for all values of <span class="math notranslate nohighlight">\(x\)</span>. We will see an example of this below.
 That is, the basis functions does not have to be everywhere zero except for
 at the quadrature points.
 They are however orthogonal at the quadrature points as stated by property
@@ -437,20 +439,20 @@ They are however orthogonal at the quadrature points as stated by property
 Property 4 is given mathematically as</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    \langle \chi_i | \hat{v}(x) | \chi_j \rangle
-    \approx \sum_{k = 1}^{K} w_k \chi_i(x_k) v(x_k) \chi_j(x_k)
-    = \sum_{k = 1}^{K} \frac{w_k}{\sqrt{w_i w_j}} \delta_{ik} \delta_{jk} v(x_k)
-    = \delta_{ij} v(x_j),
+    \langle \chi_{\alpha} | \hat{v}(x) | \chi_{\beta} \rangle
+    \approx \sum_{\gamma = 1}^{K} w_{\gamma} \chi_{\alpha}(x_{\gamma}) v(x_{\gamma}) \chi_{\beta}(x_{\gamma})
+    = \sum_{k = \gamma}^{K} \frac{w_{\gamma}}{\sqrt{w_{\alpha} w_{\beta}}} \delta_{\alpha \gamma} \delta_{\beta \gamma} v(x_{\gamma})
+    = \delta_{\alpha \beta} v(x_{\beta}),
 \end{align*}\]</div>
 <p>that is, the matrix elements of the potential operator (with only <span class="math notranslate nohighlight">\(\hat{x}\)</span>-dependent operators) is the potential evaluated at the quadrature points, and it is diagonal.</p>
 </section>
 <section id="sinc-dvr-basis">
 <h2>Sinc-DVR basis<a class="headerlink" href="#sinc-dvr-basis" title="Permalink to this heading">#</a></h2>
-<p>The specific DVR-basis we will be using is the sinc-DVR by <span id="id6">[<a class="reference internal" href="intro.html#id6" title="Daniel T. Colbert and William H. Miller. A novel discrete variable representation for quantum mechanical reactive scattering via the s‐matrix kohn method. The Journal of Chemical Physics, 96(3):1982-1991, 1992. doi:10.1063/1.462100.">CM92</a>]</span>. The basis set is then <span class="math notranslate nohighlight">\(B = \{\chi_i(x) \mid i = 1, \dots, K\}\)</span> with the basis functions defined as</p>
+<p>The specific DVR-basis we will be using is the sinc-DVR by <span id="id7">Colbert and Miller [<a class="reference internal" href="intro.html#id6" title="Daniel T. Colbert and William H. Miller. A novel discrete variable representation for quantum mechanical reactive scattering via the s‐matrix kohn method. The Journal of Chemical Physics, 96(3):1982-1991, 1992. doi:10.1063/1.462100.">CM92</a>]</span>. The basis set is then <span class="math notranslate nohighlight">\(B = \{\chi_{\alpha}(x) \mid \alpha = 1, \dots, K\}\)</span> with the basis functions defined as</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    \chi_i(x) = \frac{1}{\sqrt{\delta x}} \mathrm{sinc}\!\left(
-    \frac{x - x_i}{\delta x}
+    \chi_{\alpha}(x) = \frac{1}{\sqrt{\delta x}} \mathrm{sinc}\!\left(
+    \frac{x - x_{\alpha}}{\delta x}
     \right),
 \end{align*}\]</div>
 <p>where the <span class="math notranslate nohighlight">\(\mathrm{sinc}(x)\)</span>-function is given by</p>
@@ -461,17 +463,17 @@ Property 4 is given mathematically as</p>
         \quad 1, &amp; x = 0.
     \end{cases}
 \end{align*}\]</div>
-<p>The quadrature for this basis is <span class="math notranslate nohighlight">\(Q = \{(x_0 + i\delta x, \delta x) \mid i = 1, \dots, K\}\)</span>, that is, a uniform grid  with equal weights, <span class="math notranslate nohighlight">\(x_i = x_0 + i \delta x\)</span> with <span class="math notranslate nohighlight">\(x_0\)</span> an arbitrary starting point, and all weights the same <span class="math notranslate nohighlight">\(\delta x\)</span>.</p>
+<p>The quadrature for this basis is <span class="math notranslate nohighlight">\(Q = \{(x_0 + \alpha\delta x, \delta x) \mid \alpha = 1, \dots, K\}\)</span>, that is, a uniform grid  with equal weights, <span class="math notranslate nohighlight">\(x_{\alpha} = x_0 + \alpha \delta x\)</span> with <span class="math notranslate nohighlight">\(x_0\)</span> an arbitrary starting point, and all weights the same <span class="math notranslate nohighlight">\(\delta x\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Class defining a sinc-DVR single-particle function</span>
 <span class="k">class</span> <span class="nc">SincDVR</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x_i</span> <span class="o">=</span> <span class="n">x_i</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_a</span><span class="p">,</span> <span class="n">dx</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_a</span> <span class="o">=</span> <span class="n">x_a</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span>
 
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sinc</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_i</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sinc</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_a</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -484,7 +486,7 @@ Property 4 is given mathematically as</p>
 <span class="n">num_dvr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">dx</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Number of DVR-states</span>
 
 <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">num_dvr</span><span class="p">)</span>  <span class="c1"># The uniform quadrature grid</span>
-<span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="n">SincDVR</span><span class="p">(</span><span class="n">x_i</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>  <span class="c1"># List of callable sinc-DVR functions</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">[</span><span class="n">SincDVR</span><span class="p">(</span><span class="n">x_a</span><span class="p">,</span> <span class="n">dx</span><span class="p">)</span> <span class="k">for</span> <span class="n">x_a</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>  <span class="c1"># List of callable sinc-DVR functions</span>
 </pre></div>
 </div>
 </div>
@@ -492,7 +494,7 @@ Property 4 is given mathematically as</p>
 <p>Below we demonstrate what the sinc-DVR functions look like, both on the grid (where they are Kronecker-Deltas) and on a more refined grid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">B</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="n">grid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\chi_3(x_j)$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">B</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="n">grid</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\chi_3(x_\beta)$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="p">(</span><span class="n">x</span> <span class="o">:=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">num_dvr</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)),</span>
     <span class="n">B</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="n">x</span><span class="p">),</span>
@@ -506,46 +508,49 @@ Property 4 is given mathematically as</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b794f91c71ff938db01920b291c13d8f1dac8e07c26b8817e123f7118ca14dcb.png" src="_images/b794f91c71ff938db01920b291c13d8f1dac8e07c26b8817e123f7118ca14dcb.png" />
+<img alt="_images/57eb494545a7f8f04ae4b0c77539d3f17261a701ef8d62a2b34a2a76432540fd.png" src="_images/57eb494545a7f8f04ae4b0c77539d3f17261a701ef8d62a2b34a2a76432540fd.png" />
 </div>
 </div>
-<p>Here <span class="math notranslate nohighlight">\(\chi_3(x)\)</span> is the sinc-DVR function on a more refined grid, and <span class="math notranslate nohighlight">\(\chi_3(x_j)\)</span> denotes the same function evaluated only at the grid points.</p>
+<p>Here <span class="math notranslate nohighlight">\(\chi_3(x)\)</span> is the sinc-DVR function on a more refined grid, and <span class="math notranslate nohighlight">\(\chi_3(x_{\beta})\)</span> denotes the same function evaluated only at the grid points. We see that <span class="math notranslate nohighlight">\(\chi_3(x_{\beta})\)</span> is <span class="math notranslate nohighlight">\((\delta x)^{-1/2}\)</span> at <span class="math notranslate nohighlight">\(x_3\)</span>, and zero at all the other quadrature points. The more refined function <span class="math notranslate nohighlight">\(\chi_3(x)\)</span> oscillates between the quadrature points, but is exactly zero at <span class="math notranslate nohighlight">\(x = x_{\beta}\)</span> when <span class="math notranslate nohighlight">\(\beta \neq 3\)</span>, and <span class="math notranslate nohighlight">\((\delta x)^{-1/2}\)</span> when <span class="math notranslate nohighlight">\(x = x_3\)</span>.</p>
 <section id="matrix-elements-of-the-hamiltonian">
 <h3>Matrix elements of the Hamiltonian<a class="headerlink" href="#matrix-elements-of-the-hamiltonian" title="Permalink to this heading">#</a></h3>
-<p>We will be needing both one-body and two-body matrix elements from the Hamiltonian shown in equation <a class="reference internal" href="#equation-eq-hamiltonian">(1)</a>. The kinetic energy matrix elements for the sinc-DVR can be found in equation (A7) in <span id="id7">[<a class="reference internal" href="intro.html#id6" title="Daniel T. Colbert and William H. Miller. A novel discrete variable representation for quantum mechanical reactive scattering via the s‐matrix kohn method. The Journal of Chemical Physics, 96(3):1982-1991, 1992. doi:10.1063/1.462100.">CM92</a>]</span>. They are</p>
+<p>We will be needing both one-body and two-body matrix elements from the Hamiltonian shown in equation <a class="reference internal" href="#equation-eq-hamiltonian">(1)</a>. The kinetic energy matrix elements for the sinc-DVR can be found in equation (A7) in Ref. <span id="id8">[<a class="reference internal" href="intro.html#id6" title="Daniel T. Colbert and William H. Miller. A novel discrete variable representation for quantum mechanical reactive scattering via the s‐matrix kohn method. The Journal of Chemical Physics, 96(3):1982-1991, 1992. doi:10.1063/1.462100.">CM92</a>]</span>. They are</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    \langle \chi_i | -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d} x^2} | \chi_j \rangle
+    t_{\alpha \beta}
+    \equiv
+    \langle \chi_{\alpha} | \hat{t} | \chi_{\beta} \rangle
     = \begin{cases}
-        \frac{\pi^2}{6 (\delta x)^2}, &amp; i = j, \\
-        \frac{(-1)^{i - j}}{(\delta x)^2 (i - j)^2}, &amp; i \neq j.
+        \frac{\pi^2}{6 (\delta x)^2}, &amp; \alpha = \beta, \\
+        \frac{(-1)^{\alpha - \beta}}{(\delta x)^2 (\alpha - \beta)^2}, &amp; \alpha \neq \beta,
     \end{cases}
 \end{align*}\]</div>
-<p>The remaining terms can be evaluated using the quadrature rule. For example, the matrix elements of the harmonic oscillator potential (or only the operator part) are</p>
+<p>where <span class="math notranslate nohighlight">\(\hat{t} = -\frac{1}{2} \frac{\mathrm{d}^2}{\mathrm{d} x^2}\)</span> is the kinetic energy operator.
+The remaining terms can be evaluated using the quadrature rule. For example, the matrix elements of the harmonic oscillator potential (or only the operator part) are</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    \langle \chi_i | \hat{x}^2 | \chi_j \rangle
-    \approx \delta_{ij} x_j^2.
+    \langle \chi_{\alpha} | \hat{x}^2 | \chi_{\beta} \rangle
+    \approx \delta_{\alpha \beta} x_{\beta}^2.
 \end{align*}\]</div>
 <p>For the two-body Coulomb interaction there are two integrals which can both be solved using the quadrature rule.
 That is (note which position in the bras and the kets are pairwise integrated),</p>
 <div class="math notranslate nohighlight" id="equation-eq-task-1-quadrature-two-body">
 <span class="eqno">(3)<a class="headerlink" href="#equation-eq-task-1-quadrature-two-body" title="Permalink to this equation">#</a></span>\[
-    \langle \chi_i \chi_j | \hat{u}(x_1, x_2) | \chi_k \chi_l \rangle
-    = \int \mathrm{d} x \mathrm{d} y \frac{\chi_i(x) \chi_j(y) \chi_k(x) \chi_l(y)}{\sqrt{(x - y)^2 + a^2}}
-    \approx \delta_{ik} \delta_{jl} u(x_k, x_l).
+    \langle \chi_{\alpha} \chi_{\beta} | \hat{u}(x_1, x_2) | \chi_{\gamma} \chi_{\delta} \rangle
+    = \int \mathrm{d} x \mathrm{d} y \frac{\chi_{\alpha}(x) \chi_{\beta}(y) \chi_{\gamma}(x) \chi_{\delta}(y)}{\sqrt{(x - y)^2 + a^2}}
+    \approx \delta_{\alpha \gamma} \delta_{\beta \delta} u(x_{\gamma}, x_{\delta}).
 \]</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition-problem-a admonition">
+<p class="admonition-title">Problem a)</p>
 <p>Show how the quadrature rule can be used twice to get the expression in equation <a class="reference internal" href="#equation-eq-task-1-quadrature-two-body">(3)</a>.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition-problem-b admonition">
+<p class="admonition-title">Problem b)</p>
 <p>Set up the matrix elements needed for the Hamiltonian in equation <a class="reference internal" href="#equation-eq-hamiltonian">(1)</a>.</p>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Tip</p>
-<p>Once you have set up the matrix elements of the one-body Hamiltonian from equation <a class="reference internal" href="#equation-eq-one-body-hamiltonian">(2)</a> you can check that the setup has been done correctly. The eigenvalues of the one-body Hamiltonian should correspond to the eigenvalues of a one-dimensional harmonic oscillator (see <span id="id8">[<a class="reference internal" href="intro.html#id4" title="David J Griffiths. Introduction to quantum mechanics. Prentice Hall, second edition, 2010.">Gri10</a>]</span> chapter 2.3) (if they differ by much you might need to increase the number of basis functions, and it might be that only the lowest eigenvalues are correct).</p>
+<p>Once you have set up the matrix elements of the one-body Hamiltonian from equation <a class="reference internal" href="#equation-eq-one-body-hamiltonian">(2)</a> you can check that the setup has been done correctly. The eigenvalues of the one-body Hamiltonian should correspond to the eigenvalues of a one-dimensional harmonic oscillator (see <span id="id9">[<a class="reference internal" href="intro.html#id4" title="David J Griffiths. Introduction to quantum mechanics. Prentice Hall, second edition, 2010.">Gri10</a>]</span> chapter 2.3) (if they differ by much you might need to increase the number of basis functions, and it might be that only the lowest eigenvalues are correct).</p>
 </div>
 </section>
 </section>
@@ -596,7 +601,7 @@ That is (note which position in the bras and the kets are pairwise integrated),<
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Task 2: General Hartree-Fock solver</p>
+        <p class="prev-next-title">Task 2: Restricted Hartree-Fock ground state solver</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
